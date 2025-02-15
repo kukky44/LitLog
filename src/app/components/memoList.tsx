@@ -4,7 +4,6 @@ import { MemoType } from "@/src/types";
 import MemoItem from "./memoItem";
 import NewMemo from "./newMemo";
 import useSWR from "swr";
-import LoadingAnimation from "./ui/buttons/loadingAnimation";
 import { fetcher } from "../lib/fetcher";
 
 interface MemoListProps {
@@ -15,14 +14,18 @@ const MemoList: React.FC<MemoListProps> = ({ bookId }) => {
   const { data, error, isLoading, mutate} = useSWR<MemoType[]>(`/api/getAllMemos/${bookId}`, fetcher);
 
   return (
-    <>
+    <div className="mt-4">
       <NewMemo bookId={bookId} mutate={mutate} />
-      {data&&
-        data.map(memo => (
-          <MemoItem key={memo.id} memo={memo} />
-        ))
-      }
-    </>
+      <div className="mt-4">
+        {data&&
+          data.map(memo => (
+            <div key={memo.id} className="border-t border-gray-200 py-2 px-4">
+              <MemoItem memo={memo} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
   )
 }
 

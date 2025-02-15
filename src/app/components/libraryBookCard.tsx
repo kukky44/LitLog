@@ -11,10 +11,10 @@ import { setRequestMeta } from "next/dist/server/request-meta";
 interface BookProps {
   bookData: BookType;
   isRegistered: boolean;
-  setRegisterStatus: (value: boolean) => void;
+  mutate: () => void;
 }
 
-const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, setRegisterStatus }) => {
+const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }) => {
   const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
   const router = useRouter();
@@ -39,7 +39,7 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, setRegis
       .then(res => res.json())
       .then(data => {
         isRegistered = false;
-        setRegisterStatus(false);
+        mutate();
         return;
       })
       .catch(e => console.log(e));
@@ -50,7 +50,7 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, setRegis
   return (
     <>
     {book &&
-      <div className="w-72 bg-white text-black p-4 rounded">
+      <div className="bg-white text-black p-4 rounded">
         <h2 className="text-lg font-bold mb-1">{book.title}</h2>
         <div className="mb-2 text-sm">{book.author}</div>
         <div className="text-center block">

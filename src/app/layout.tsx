@@ -23,7 +23,7 @@ export default function RootLayout({
           <div className="bg-violet-200 text-black flex flex-col min-h-screen">
             <Header />
             <NextTopLoader color="#4c1d95" showSpinner={false} shadow={false} />
-            <div className="max-w-4xl mt-8 mx-auto px-8">
+            <div className="max-w-4xl mt-8 mx-auto px-8 w-full">
               {children}
             </div>
             <FooterC />

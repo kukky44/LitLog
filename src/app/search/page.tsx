@@ -70,7 +70,7 @@ export default function Search() {
   return (
     <div>
       {isLoading?
-        <div className="mt-6">
+        <div className="mt-6 text-center">
           <LoadingAnimation />
         </div>
       :

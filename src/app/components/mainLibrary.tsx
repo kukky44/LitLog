@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BookType } from "@/src/types";
 import BookList from "./bookList";
 import useSWR from "swr";
@@ -18,7 +18,7 @@ export default function MainLibrary() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">ライブラリ</h2>
-      {isLoading ? <div className="mt-8"><LoadingAnimation /></div>:
+      {isLoading ? <div className="mt-8 text-center"><LoadingAnimation /></div>:
         bookData ? <BookList books={bookData} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} /> :
           <div>本を追加してください。</div>
       }

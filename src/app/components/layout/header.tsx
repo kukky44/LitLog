@@ -30,6 +30,8 @@ export default function Header() {
     setSearchInput(keyword);
   }, [keyword]);
 
+  const textNavLinkClassName = "hover:text-violet-800 transition-colors";
+
   return (
     <header className="flex justify-between py-4 px-8 items-center bg-violet-50">
       <h1 className="text-2xl font-bold">
@@ -39,13 +41,13 @@ export default function Header() {
         <ul className="flex justify-between gap-8 items-center">
           {session ?
             <>
-              <li><Link href="/library">ライブラリ</Link></li>
-              <li><button onClick={() => signOut({callbackUrl: "/"})}>ログアウト</button></li>
+              <li><Link className={textNavLinkClassName} href="/library">ライブラリ</Link></li>
+              <li><button className={textNavLinkClassName} onClick={() => signOut({callbackUrl: "/"})}>ログアウト</button></li>
             </>
             :
             <>
               <li><Link href="/signup"><PrimaryButton label="ユーザー登録" /></Link></li>
-              <li><Link href="/login">ログイン</Link></li>
+              <li><Link className={textNavLinkClassName} href="/login">ログイン</Link></li>
             </>
           }
           <li>

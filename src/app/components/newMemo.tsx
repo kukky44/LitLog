@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import PrimaryButton from "./ui/buttons/primaryButton";
 
 interface BookProps {
@@ -11,11 +11,10 @@ interface BookProps {
 const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
   const [memoInput, setMemoInput] = useState<string>("");
   const [pageNum, setPageNum] = useState<number | string>("");
+  const testAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const handlePageNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputNum = e.target.value;
-    console.log(inputNum);
-
     if(inputNum === "") setPageNum("");
 
     if(/^\d+$/.test(inputNum)) setPageNum(inputNum);
@@ -36,13 +35,13 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
 
     if(res.ok){
       mutate();
-      setPageNum("");
       setMemoInput("");
+      testAreaRef.current?.focus();
     }
   }
 
   return (
-    <form className="border-gray-200 border-b last:border-none p-6">
+    <form className="py-2 px-6">
       <div className="flex justify-between items-center">
         <p className="font-bold text-lg">メモを追加</p>
         <div className="flex justify-between">
@@ -62,7 +61,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
         </div>
       </div>
       <div className="mt-2">
-        <textarea value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded" rows={3} />
+        <textarea ref={testAreaRef} value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded" rows={3} />
       </div>
       <div className="mt-3 flex justify-end">
         <PrimaryButton label="追加" clickEvent={handleSubmit} />

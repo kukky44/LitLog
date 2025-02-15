@@ -9,10 +9,10 @@ import NotRegisteredModal from "./notRegisteredModal";
 
 interface BookProps {
   bookData: BookType;
-  setRegisterStatus: (value: boolean) => void;
+  mutate: () => void;
 }
 
-const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, setRegisterStatus }) => {
+const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, mutate }) => {
   const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, setRegisterStatus
       return;
     }
     const result = book && registerBook(book);
-    setRegisterStatus(true);
+    mutate();
   }
 
   return (

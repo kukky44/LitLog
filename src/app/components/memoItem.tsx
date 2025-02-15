@@ -18,9 +18,9 @@ const MemoItem: React.FC<MemoProps> = ({ memo }) => {
   return (
     <>
       {memo &&
-        <div className="border-gray-200 border-b last:border-none p-6">
-          <div className="flex justify-between">
-            <div className="text-sm text-gray-600">{updateAat}</div>
+        <div className="px-2 py-4">
+          <div className="text-gray-600 flex justify-between items-center text-sm">
+            <div>{updateAat}</div>
             <div><span className="text-xs">ページ：</span>{memo.pageNumber}</div>
           </div>
           <div className="mt-2">

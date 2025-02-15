@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import PrimaryButton from "./ui/buttons/primaryButton";
 import NotRegisteredModal from "./notRegisteredModal";
 import { useState } from "react";
+import ReadingStatusLabel from "./ui/readingStatusLabel";
 
 type BookProps = {
   book: BookType;
@@ -58,22 +59,23 @@ export default function Book( { book, isRegistered, mutate }: BookProps) {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 p-4 bg-violet-50 rounded">
+    <div className="grid grid-cols-3 gap-4 p-5 bg-violet-50 rounded">
       <Link
         href={`/book/${book.googleBookId}`}
         onClick={() => localStorage.setItem(book.googleBookId, JSON.stringify(book))}
-      >
+        >
         {book.imageUrl && <img className="w-full" src={book.imageUrl} alt={`${book.title}のカバー`} />}
       </Link>
       <div className="col-span-2 flex flex-col justify-between">
         <div className="">
+          {book.readingStatus !== null && book.readingStatus !== undefined && <ReadingStatusLabel status={book.readingStatus} />}
           <Link
             href={`/book/${book.googleBookId}`}
             onClick={() => localStorage.setItem(book.googleBookId, JSON.stringify(book))}
-          >
-            <div className="font-bold mb-2">{book.title}</div>
+            >
+            <div className="font-bold mt-2 mb-1">{book.title}</div>
           </Link>
-          <div className="text-sm">{book.author}</div>
+          <div className="text-sm mb-2">{book.author}</div>
         </div>
         <form>
           {isRegistered?
