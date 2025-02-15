@@ -1,58 +1,71 @@
 "use client"
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BookType } from "@/src/types";
 import BookList from "../components/bookList";
 import { testData } from "./testdata";
 import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
+import { fetcher } from "../lib/fetcher";
+
+interface GoogleBooksAPIItems {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    description?: string;
+    imageLinks?: { thumbnail: string };
+    industryIdentifiers?: { type: string; identifier: string }[];
+  };
+}
+
+interface GoogleBooksAPIResponse {
+  items: Array<GoogleBooksAPIItems>;
+};
 
 export default function Search() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword")
   const [books, setBooks] = useState<BookType[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[]>([]);
   const { data: session, status } = useSession();
+  const { data: bs, error, isLoading, mutate} = useSWR<GoogleBooksAPIResponse>(
+    `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance`,
+    fetcher,
+    {
+      onSuccess: (data) => {
+        if(!data || !data?.items) return;
+        const bookData: BookType[] = data.items.map((d: any) => {
+          const vInfo = d.volumeInfo;
+          let isbn: string = "";
 
-  useEffect(() => {
-    setIsLoading(true);
-    if(session){
-      fetch('/api/getRegisteredGBookID')
-      .then(res => res.json())
-      .then(data => {
-        setRegisteredGBookIds(data.map((d:any) => d.googleBookId));
-      })
-    }
-
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance`)
-    .then((res) => {
-      return res.json()
-    }).then((data) => {
-      const bookData = data?.items.map((d: any) => {
-        const vInfo = d.volumeInfo;
-        let isbn: string = "";
-
-        if(vInfo.industryIdentifiers && vInfo.industryIdentifiers[0].type === "ISBN_13"){
-          isbn = vInfo.industryIdentifiers[0].identifier;
+          if(vInfo.industryIdentifiers && vInfo.industryIdentifiers[0].type === "ISBN_13"){
+            isbn = vInfo.industryIdentifiers[0].identifier;
+          }
+          return {
+            title: vInfo.title,
+            author: vInfo.authors?.join("、"),
+            description: vInfo.description,
+            imageUrl: vInfo.imageLinks?.thumbnail,
+            isbn: isbn,
+            googleBookId: d.id
+          }
+        });
+        if(session){
+          fetch('/api/getRegisteredBookID')
+          .then(res => res.json())
+          .then(data => {
+            bookData.map(item => {
+              item.id = data.find((d:any) => d.googleBookId === item.googleBookId)?.id;
+            })
+            setRegisteredGBookIds(data.map((d:any) => d.googleBookId));
+          })
         }
-        return {
-          title: vInfo.title,
-          author: vInfo.authors?.join("、"),
-          description: vInfo.description,
-          imageUrl: vInfo.imageLinks?.thumbnail,
-          isbn: isbn,
-          googleBookId: d.id
-        }
-      });
-      setBooks(bookData);
-      setIsLoading(false);
-    }).catch(e => {
-      console.error(e);
-    })
-
-  }, [keyword]);
+        setBooks(bookData);
+      }
+  });
 
   return (
     <div>
@@ -63,7 +76,7 @@ export default function Search() {
       :
       <div>
         <h2 className="mb-6 text-lg font-bold">検索結果</h2>
-        {books && <BookList books={books} registeredGoogleBookIds={registeredGBookIds} />}
+        {books && <BookList books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />}
         </div>
         }
     </div>

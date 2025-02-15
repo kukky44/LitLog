@@ -14,6 +14,7 @@ export async function GET(req: Request) {
         userId: uid
       },
       select: {
+        id: true,
         googleBookId: true
       }
     })

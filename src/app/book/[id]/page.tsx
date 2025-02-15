@@ -52,7 +52,7 @@ export default function Page(){
       <div>
         <div className="grid grid-cols-5 gap-4">
           <div className="col-span-2 top-6 sticky max-h-[calc(100vh-4rem)]">
-            <LibraryBookCard bookData={book} isRegistered={isRegistered} />
+            <LibraryBookCard bookData={book} isRegistered={isRegistered} setRegisterStatus={setRegisterStatus} />
           </div>
           <div className="col-span-3 rounded bg-white text-black">
             <MemoList bookId={book.id} />

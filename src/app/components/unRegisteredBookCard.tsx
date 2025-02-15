@@ -4,7 +4,6 @@ import { BookType } from "@/src/types"
 import { registerBook } from "../lib/registerBook";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import PrimaryButton from "./ui/buttons/primaryButton";
 import NotRegisteredModal from "./notRegisteredModal";
 
@@ -16,7 +15,6 @@ interface BookProps {
 const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, setRegisterStatus }) => {
   const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
-  const router = useRouter();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const closeModal = () => {
@@ -30,7 +28,6 @@ const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, setRegisterStatus
       return;
     }
     const result = book && registerBook(book);
-    console.log(result);
     setRegisterStatus(true);
   }
 

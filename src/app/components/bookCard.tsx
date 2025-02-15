@@ -12,9 +12,10 @@ import { useState } from "react";
 type BookProps = {
   book: BookType;
   isRegistered: boolean;
+  mutate?: () => void;
 }
 
-export default function Book( { book, isRegistered }: BookProps) {
+export default function Book( { book, isRegistered, mutate }: BookProps) {
   const {data: session } = useSession();
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -24,6 +25,7 @@ export default function Book( { book, isRegistered }: BookProps) {
     if(session) {
       registerBook(book);
       isRegistered = true;
+      mutate&& mutate();
     }else{
       setShowModal(true);
     }
@@ -37,12 +39,14 @@ export default function Book( { book, isRegistered }: BookProps) {
         method: "DELETE",
         headers: { "Content-Type": "application/json"},
         body: JSON.stringify({
-          bookId: book.id
+          bookId: book.id,
         })
       })
       .then(res => res.json())
       .then(data => {
         if(data) isRegistered = false;
+        mutate&& mutate();
+        return;
       })
       .catch(e => console.log(e)
       )

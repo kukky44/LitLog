@@ -6,20 +6,46 @@ import SecondaryButton from "./ui/buttons/secondaryButton";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { setRequestMeta } from "next/dist/server/request-meta";
 
 interface BookProps {
   bookData: BookType;
   isRegistered: boolean;
+  setRegisterStatus: (value: boolean) => void;
 }
 
-const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered }) => {
+const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, setRegisterStatus }) => {
   const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
+  const router = useRouter();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = book && registerBook(book);
+    book && registerBook(book);
+    isRegistered = true;
   }
+
+  const handleDeregister = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if(session && book?.id) {
+      fetch("/api/deregisterBook", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({
+          bookId: book?.id,
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        isRegistered = false;
+        setRegisterStatus(false);
+        return;
+      })
+      .catch(e => console.log(e));
+    }
+  }
+
 
   return (
     <>
@@ -35,7 +61,7 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered }) => {
           {session &&
             <div>
               {isRegistered?
-                <SecondaryButton label="登録解除" clickEvent={handleRegister} />
+                <SecondaryButton label="登録解除" clickEvent={handleDeregister} />
                 :
                 <SecondaryButton label="本を登録" clickEvent={handleRegister} />
               }
