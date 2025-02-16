@@ -1,6 +1,5 @@
 import Link from "next/link";
 import PrimaryButton from "./components/ui/buttons/primaryButton";
-import { redirect } from "next/navigation";
 import { serverAuth } from "./lib/auth";
 
 export default async function Home() {

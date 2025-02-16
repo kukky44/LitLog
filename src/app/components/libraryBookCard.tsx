@@ -6,7 +6,6 @@ import SecondaryButton from "./ui/buttons/secondaryButton";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { setRequestMeta } from "next/dist/server/request-meta";
 
 interface BookProps {
   bookData: BookType;

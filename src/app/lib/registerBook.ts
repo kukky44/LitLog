@@ -1,7 +1,7 @@
 import { BookType } from "@/src/types"
 
-export const registerBook = (book: BookType) => {
-  fetch("/api/registerBook", {
+export const registerBook = async (book: BookType) => {
+  await fetch("/api/registerBook", {
     method: "POST",
     headers: { "Content-Type": "application/json"},
     body: JSON.stringify({

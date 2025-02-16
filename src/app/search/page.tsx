@@ -29,8 +29,8 @@ export default function Search() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword")
   const [books, setBooks] = useState<BookType[]>([]);
-  const [registeredGBookIds, setRegisteredGBookIds] = useState<string[]>([]);
-  const { data: session, status } = useSession();
+  const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
+  const { data: session } = useSession();
   const { data: bs, error, isLoading, mutate} = useSWR<GoogleBooksAPIResponse>(
     `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance`,
     fetcher,

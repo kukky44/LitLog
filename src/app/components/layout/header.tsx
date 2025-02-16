@@ -12,7 +12,7 @@ export default function Header() {
   const [searchInput, setSearchInput] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
-  const {data: session } = useSession();
+  const {data: session, status } = useSession();
 
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,7 +39,9 @@ export default function Header() {
       </h1>
       <nav>
         <ul className="flex justify-between gap-8 items-center">
-          {session ?
+          {status === "loading" ?
+            <></>
+          :session ?
             <>
               <li><Link className={textNavLinkClassName} href="/library">ライブラリ</Link></li>
               <li><button className={textNavLinkClassName} onClick={() => signOut({callbackUrl: "/"})}>ログアウト</button></li>

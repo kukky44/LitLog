@@ -6,7 +6,6 @@ import { useState } from "react";
 import { BookType } from "@/src/types";
 import MemoList from "../../components/memoList";
 import UnRegisteredBookCard from "../../components/unRegisteredBookCard";
-import { useSession } from "next-auth/react";
 import ReadingStatusRadio from "../../components/ui/readingStatusRadio";
 import useSWR from "swr";
 import { fetcher } from "../../lib/fetcher";
@@ -14,7 +13,6 @@ import { fetcher } from "../../lib/fetcher";
 export default function Page(){
   const [book, setBook] = useState<BookType | null>(null);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
-  const {data: session, status} = useSession();
 
   const params = useParams();
   const googleBookId: string = params.id ? String(params.id) : "";
