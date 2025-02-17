@@ -6,6 +6,7 @@ import { useState } from "react";
 import ReadingStatusLabel from "./ui/readingStatusLabel";
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
 import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
+import Image from "next/image";
 
 type BookProps = {
   book: BookType;
@@ -26,7 +27,7 @@ export default function Book( { book, isRegistered, mutate }: BookProps) {
         href={`/book/${book.googleBookId}`}
         onClick={() => localStorage.setItem(book.googleBookId, JSON.stringify(book))}
         >
-        {book.imageUrl && <img className="w-full" src={book.imageUrl} alt={`${book.title}のカバー`} />}
+        {book.imageUrl && <Image width={450} height={800} priority={true} className="w-full" src={book.imageUrl} alt={`${book.title}のカバー`} />}
       </Link>
       <div className="col-span-2 flex flex-col justify-between">
         <div className="">

@@ -9,9 +9,9 @@ import LoadingAnimation from "./ui/buttons/loadingAnimation";
 
 export default function MainLibrary() {
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
-  const { data: bookData, error, isLoading, mutate} = useSWR<BookType[]>('/api/getAllBooks/', fetcher, {
+  const { data: bookData, isLoading, mutate} = useSWR<BookType[]>('/api/getAllBooks/', fetcher, {
     onSuccess: (data) => {
-      if(data) setRegisteredGBookIds(data.map((d:any) => d.googleBookId));
+      if(data) setRegisteredGBookIds(data.map((d: BookType) => d.googleBookId));
     }
   });
 

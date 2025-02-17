@@ -29,9 +29,9 @@ const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegi
           })
         })
         .then(res => res.json())
-        .then(data => {
+        .then(() => {
           updateRegisteredState(false);
-          mutate&& mutate();
+          if(mutate) mutate();
         })
         .catch(e => console.log(e)
         )

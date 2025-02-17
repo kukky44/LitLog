@@ -1,8 +1,8 @@
 "use client"
 
 import { BookType } from "@/src/types"
-import { useState } from "react";
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
+import Image from "next/image";
 
 interface BookProps {
   bookData: BookType;
@@ -10,22 +10,21 @@ interface BookProps {
 }
 
 const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, mutate }) => {
-  const [book, setBook] = useState<BookType | null>(bookData);
 
   return (
     <>
-    {book &&
+    {bookData &&
       <div className="mx-auto w-4/5 bg-white text-black p-4 rounded">
-        <h2 className="text-lg font-bold mb-1">{book.title}</h2>
-        <div className="mb-4 text-sm">{book.author}</div>
+        <h2 className="text-lg font-bold mb-1">{bookData.title}</h2>
+        <div className="mb-4 text-sm">{bookData.author}</div>
         <div className="grid grid-flow-col gap-4">
           <div className="text-center block">
-            {book.imageUrl && <img src={book.imageUrl} alt={`${book.title}のカバー`} />}
+          {bookData.imageUrl && <Image width={450} height={800} priority={true} className="w-full" src={bookData.imageUrl} alt={`${bookData.title}のカバー`} />}
           </div>
-          <div className="text-xs mb-3">{book.description}</div>
+          <div className="text-xs mb-3">{bookData.description}</div>
         </div>
         <div className="mt-4">
-          <RegsiterBookButton book={book} mutate={mutate} />
+          <RegsiterBookButton book={bookData} mutate={mutate} />
         </div>
       </div>
     }

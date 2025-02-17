@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
+import Image from "next/image";
 
 interface BookProps {
   bookData: BookType;
@@ -14,7 +15,6 @@ interface BookProps {
 
 const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }) => {
   const {data: session } = useSession();
-  const [book, setBook] = useState<BookType | null>(bookData);
   const [isRegisteredState, setIsRegisteredState] = useState(isRegistered);
 
   const updateRegisteredState = (val: boolean) => {
@@ -23,21 +23,21 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }
 
   return (
     <>
-    {book &&
+    {bookData &&
       <div className="bg-white text-black p-4 rounded">
-        <h2 className="text-lg font-bold mb-1">{book.title}</h2>
-        <div className="mb-2 text-sm">{book.author}</div>
+        <h2 className="text-lg font-bold mb-1">{bookData.title}</h2>
+        <div className="mb-2 text-sm">{bookData.author}</div>
         <div className="text-center block">
-          <img src={book.imageUrl} alt={`${book.title}のカバー`} />
+        {bookData.imageUrl && <Image width={450} height={800} priority={true} className="w-full" src={bookData.imageUrl} alt={`${bookData.title}のカバー`} />}
         </div>
         <div className="detail mt-4">
-          <div className="text-xs mb-3">{book.description}</div>
+          <div className="text-xs mb-3">{bookData.description}</div>
           {session &&
             <div>
               {isRegisteredState?
-                <DeregsiterBookButton bookId={book.id} mutate={mutate} updateRegisteredState={updateRegisteredState} />
+                <DeregsiterBookButton bookId={bookData.id} mutate={mutate} updateRegisteredState={updateRegisteredState} />
               :
-                <RegsiterBookButton book={book} mutate={mutate} updateRegisteredState={updateRegisteredState} />
+                <RegsiterBookButton book={bookData} mutate={mutate} updateRegisteredState={updateRegisteredState} />
               }
             </div>
           }

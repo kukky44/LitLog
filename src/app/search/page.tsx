@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { BookType } from "@/src/types";
 import BookList from "../components/bookList";
-import { testData } from "./testdata";
 import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
@@ -31,13 +30,13 @@ export default function Search() {
   const [books, setBooks] = useState<BookType[]>([]);
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
   const { data: session } = useSession();
-  const { data: bs, error, isLoading, mutate} = useSWR<GoogleBooksAPIResponse>(
+  const { isLoading, mutate} = useSWR<GoogleBooksAPIResponse>(
     `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance`,
     fetcher,
     {
       onSuccess: (data) => {
         if(!data || !data?.items) return;
-        const bookData: BookType[] = data.items.map((d: any) => {
+        const bookData: BookType[] = data.items.map((d: GoogleBooksAPIItems) => {
           const vInfo = d.volumeInfo;
           let isbn: string = "";
 
@@ -51,16 +50,16 @@ export default function Search() {
             imageUrl: vInfo.imageLinks?.thumbnail,
             isbn: isbn,
             googleBookId: d.id
-          }
+          } as BookType;
         });
         if(session){
           fetch('/api/getRegisteredBookID')
           .then(res => res.json())
           .then(data => {
             bookData.map(item => {
-              item.id = data.find((d:any) => d.googleBookId === item.googleBookId)?.id;
+              item.id = data.find((d:BookType) => d.googleBookId === item.googleBookId)?.id;
             })
-            setRegisteredGBookIds(data.map((d:any) => d.googleBookId));
+            setRegisteredGBookIds(data.map((d:BookType) => d.googleBookId));
           })
         }
         setBooks(bookData);

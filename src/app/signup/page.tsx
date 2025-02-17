@@ -22,7 +22,7 @@ export default function SignUp() {
 
   async function handleSubmit (e: React.FormEvent){
     e.preventDefault();
-    let err: ErrorMsg = {};
+    const err: ErrorMsg = {};
     setErrors({});
 
     // validate email address

@@ -20,7 +20,7 @@ export default function Login() {
   const router = useRouter();
 
   async function handleSubmit (e: React.FormEvent){
-    let err: ErrorMsg = {};
+    const err: ErrorMsg = {};
     e.preventDefault();
 
     // validate email address

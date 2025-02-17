@@ -6,7 +6,7 @@ export async function DELETE(req: Request) {
     const { bookId } = await req.json();
 
     console.log(bookId);
-    const result = await prisma.book.delete({
+    await prisma.book.delete({
       where: {
         id: bookId
       }
@@ -14,6 +14,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json({message: "Deregisteration successful"}, {status: 200});
   } catch(e) {
+    console.log(e);
     return NextResponse.json({message: "failed to deregister the book"}, { status: 500 });
   }
 }

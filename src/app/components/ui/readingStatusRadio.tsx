@@ -28,9 +28,6 @@ const ReadingStatusRadio: React.FC<RadioProps> = ({bookId, status}) => {
         })
       })
       .then(res => res.json())
-      .then(data => {
-        return;
-      })
       .catch(e => console.log(e)
       )
 

@@ -25,8 +25,8 @@ const RegsiterBookButton: React.FC<ButtonProps> = ({book, mutate, updateRegister
     try {
       if(session) {
         await registerBook(book);
-        updateRegisteredState && updateRegisteredState(true);
-        mutate&& mutate();
+        if(updateRegisteredState) updateRegisteredState(true);
+        if(mutate) mutate();
       }else{
         setShowModal(true);
       }

@@ -11,7 +11,7 @@ interface MemoListProps {
 }
 
 const MemoList: React.FC<MemoListProps> = ({ bookId }) => {
-  const { data, error, isLoading, mutate} = useSWR<MemoType[]>(`/api/getAllMemos/${bookId}`, fetcher);
+  const { data, mutate} = useSWR<MemoType[]>(`/api/getAllMemos/${bookId}`, fetcher);
 
   return (
     <div className="mt-4">

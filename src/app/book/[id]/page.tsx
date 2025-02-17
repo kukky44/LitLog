@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import LibraryBookCard from "../../components/libraryBookCard";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BookType } from "@/src/types";
 import MemoList from "../../components/memoList";
 import UnRegisteredBookCard from "../../components/unRegisteredBookCard";
@@ -22,7 +22,7 @@ export default function Page(){
   const googleBookId: string = params.id ? String(params.id) : "";
   if(!googleBookId) console.log("No book id");
 
-  const { data: registeredBook, error, isLoading, mutate} = useSWR<BookType>(
+  const { mutate} = useSWR<BookType>(
     session ? `/api/getBookByGoogleId/${googleBookId}` : null,
     fetcher,
     {
@@ -41,18 +41,18 @@ export default function Page(){
     }
   );
 
-  const getBookFromLocalStorage = () => {
+  const getBookFromLocalStorage = useCallback(() => {
     const bookData = localStorage.getItem(String(googleBookId));
     if(bookData) setBook(JSON.parse(bookData));
     setIsRegistered(false);
-  }
+  },[googleBookId]);
 
   useEffect(() => {
     if(!session) {
       getBookFromLocalStorage();
       setIsRegistered(false);
     }
-  }, []);
+  }, [session, getBookFromLocalStorage]);
 
 
   return (
