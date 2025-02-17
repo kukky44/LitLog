@@ -12,6 +12,9 @@ export async function GET(req: Request) {
     const books = await prisma.book.findMany({
       where: {
         userId: uid
+      },
+      orderBy: {
+        updatedAt: "desc"
       }
     })
     return NextResponse.json(books)

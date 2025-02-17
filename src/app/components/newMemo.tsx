@@ -22,6 +22,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
 
   async function handleSubmit (e: React.FormEvent){
     e.preventDefault();
+    if(!memoInput) return console.log("empty memo");
 
     const res = await fetch("/api/createMemo", {
       method: "POST",
@@ -64,7 +65,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
         <textarea ref={testAreaRef} value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded" rows={3} />
       </div>
       <div className="mt-3 flex justify-end">
-        <PrimaryButton label="追加" clickEvent={handleSubmit} />
+        <PrimaryButton label="追加" clickEvent={handleSubmit} disabled={!memoInput} />
       </div>
     </form>
   )

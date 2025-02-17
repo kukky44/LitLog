@@ -1,11 +1,8 @@
 "use client"
 
 import { BookType } from "@/src/types"
-import { registerBook } from "../lib/registerBook";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
-import PrimaryButton from "./ui/buttons/primaryButton";
-import NotRegisteredModal from "./notRegisteredModal";
+import RegsiterBookButton from "./ui/buttons/registerBookButton";
 
 interface BookProps {
   bookData: BookType;
@@ -13,23 +10,7 @@ interface BookProps {
 }
 
 const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, mutate }) => {
-  const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  const closeModal = () => {
-    setShowModal(false);
-  }
-
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    if(!session){
-      setShowModal(true);
-      return;
-    }
-    const result = book && registerBook(book);
-    mutate();
-  }
 
   return (
     <>
@@ -44,12 +25,9 @@ const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData, mutate }) => {
           <div className="text-xs mb-3">{book.description}</div>
         </div>
         <div className="mt-4">
-          <PrimaryButton label="本を登録" clickEvent={handleRegister} />
+          <RegsiterBookButton book={book} mutate={mutate} />
         </div>
       </div>
-    }
-    {showModal&&
-      <NotRegisteredModal closeModal={closeModal} />
     }
     </>
   )

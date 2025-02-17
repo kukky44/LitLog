@@ -1,11 +1,10 @@
 "use client"
 
 import { BookType } from "@/src/types"
-import { registerBook } from "../lib/registerBook";
-import SecondaryButton from "./ui/buttons/secondaryButton";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
+import RegsiterBookButton from "./ui/buttons/registerBookButton";
 
 interface BookProps {
   bookData: BookType;
@@ -16,35 +15,11 @@ interface BookProps {
 const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }) => {
   const {data: session } = useSession();
   const [book, setBook] = useState<BookType | null>(bookData);
-  const router = useRouter();
+  const [isRegisteredState, setIsRegisteredState] = useState(isRegistered);
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    book && registerBook(book);
-    isRegistered = true;
+  const updateRegisteredState = (val: boolean) => {
+    setIsRegisteredState(val);
   }
-
-  const handleDeregister = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if(session && book?.id) {
-      fetch("/api/deregisterBook", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify({
-          bookId: book?.id,
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        isRegistered = false;
-        mutate();
-        return;
-      })
-      .catch(e => console.log(e));
-    }
-  }
-
 
   return (
     <>
@@ -59,10 +34,10 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }
           <div className="text-xs mb-3">{book.description}</div>
           {session &&
             <div>
-              {isRegistered?
-                <SecondaryButton label="登録解除" clickEvent={handleDeregister} />
-                :
-                <SecondaryButton label="本を登録" clickEvent={handleRegister} />
+              {isRegisteredState?
+                <DeregsiterBookButton bookId={book.id} mutate={mutate} updateRegisteredState={updateRegisteredState} />
+              :
+                <RegsiterBookButton book={book} mutate={mutate} updateRegisteredState={updateRegisteredState} />
               }
             </div>
           }

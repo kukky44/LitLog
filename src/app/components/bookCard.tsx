@@ -2,14 +2,10 @@
 
 import { BookType } from "@/src/types"
 import Link from "next/link";
-import SecondaryButton from "./ui/buttons/secondaryButton";
-import { registerBook } from "../lib/registerBook";
-import { useSession } from "next-auth/react";
-import PrimaryButton from "./ui/buttons/primaryButton";
-import NotRegisteredModal from "./notRegisteredModal";
 import { useState } from "react";
 import ReadingStatusLabel from "./ui/readingStatusLabel";
-import LoadingAnimation from "./ui/buttons/loadingAnimation";
+import RegsiterBookButton from "./ui/buttons/registerBookButton";
+import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
 
 type BookProps = {
   book: BookType;
@@ -18,62 +14,10 @@ type BookProps = {
 }
 
 export default function Book( { book, isRegistered, mutate }: BookProps) {
-  const {data: session } = useSession();
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [isRegisteredState, setIsRegisteredState] = useState(isRegistered);
 
-  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if(isProcessing) return console.log("process going on");
-    setIsProcessing(true);
-
-    try {
-      if(session) {
-        await registerBook(book);
-        setIsRegisteredState(true);
-        mutate&& mutate();
-      }else{
-        setShowModal(true);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsProcessing(false);
-    }
-  }
-
-  const handleDeregister = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if(isProcessing) return console.log("process going on");
-    setIsProcessing(true);
-
-    try {
-      if(session) {
-        await fetch("/api/deregisterBook", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json"},
-          body: JSON.stringify({
-            bookId: book.id,
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          setIsRegisteredState(false);
-          mutate&& mutate();
-        })
-        .catch(e => console.log(e)
-        )
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsProcessing(false);
-    }
-  }
-
-  const closeModal = () => {
-    setShowModal(false);
+  const updateRegisteredState = (val: boolean) => {
+    setIsRegisteredState(val);
   }
 
   return (
@@ -97,15 +41,12 @@ export default function Book( { book, isRegistered, mutate }: BookProps) {
         </div>
         <form>
           {isRegisteredState?
-            <SecondaryButton clickEvent={handleDeregister} label={isProcessing ? "..." : "登録解除"} disabled={isProcessing}/>
+            <DeregsiterBookButton bookId={book.id} mutate={mutate} updateRegisteredState={updateRegisteredState} />
           :
-            <PrimaryButton clickEvent={handleRegister} label={isProcessing ? "..." : "本を登録"} disabled={isProcessing} />
+            <RegsiterBookButton book={book} mutate={mutate} updateRegisteredState={updateRegisteredState} />
           }
         </form>
       </div>
-      {showModal&&
-        <NotRegisteredModal closeModal={closeModal} />
-      }
     </div>
   )
 }

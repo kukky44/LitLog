@@ -1,6 +1,7 @@
 import BookCard from "./bookCard";
 import { BookType } from "@/src/types";
 import LoadingAnimation from "./ui/buttons/loadingAnimation";
+import { useSession } from "next-auth/react";
 
 type BooksProps = {
   books: BookType[];
@@ -9,10 +10,12 @@ type BooksProps = {
 }
 
 export default function BookList({books, registeredGoogleBookIds, mutate}: BooksProps) {
+  const {data: session} = useSession();
 
   return (
     <>
-      {registeredGoogleBookIds === null ? <div className="mt-8 text-center"><LoadingAnimation /></div>
+      {session ?
+        registeredGoogleBookIds === null ? <div className="mt-8 text-center"><LoadingAnimation /></div>
         :
         <div className="grid grid-cols-2 gap-6">
           {books?.map(book=> {
@@ -23,6 +26,15 @@ export default function BookList({books, registeredGoogleBookIds, mutate}: Books
           }
           )}
         </div>
+        :
+        <div className="grid grid-cols-2 gap-6">
+          {books?.map(book=> {
+            return (
+              <BookCard key={book.googleBookId} book={book} isRegistered={false} mutate={mutate} />
+            )
+          }
+        )}
+      </div>
       }
     </>
   )

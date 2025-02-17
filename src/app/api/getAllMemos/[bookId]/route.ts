@@ -14,7 +14,7 @@ console.log(bookId);
         bookId: bookId
       },
       orderBy: {
-        createdAt: "desc"
+        updatedAt: "desc"
       }
     })
     return NextResponse.json(memos)

@@ -80,7 +80,7 @@ export default function SignUp() {
   const labelClassName = "block mt-4 mb-1";
 
   return (
-    <div>
+    <div className="w-1/2 mx-auto">
       <h2 className="mb-4 text-lg font-bold">ユーザー登録</h2>
       <form onSubmit={handleSubmit} className="min-w-80">
         <div className="text-black mb-6" >
