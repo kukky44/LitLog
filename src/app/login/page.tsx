@@ -46,7 +46,6 @@ export default function Login() {
         setErrors({invalid: "メールアドレスまたはパスワードが正しくありません。"});
         return;
       }else{
-        console.log("signin success");
         router.push('/library');
       }
     } catch(e) {

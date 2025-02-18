@@ -5,6 +5,8 @@ import FooterC from "./components/layout/footer";
 import Header from "./components/layout/header";
 import { Providers } from "./providers";
 import NextTopLoader from "nextjs-toploader";
+import { Suspense } from "react";
+import LoadingAnimation from "./components/ui/buttons/loadingAnimation";
 
 export const metadata: Metadata = {
   title: "Lit Log",
@@ -21,8 +23,10 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="bg-violet-200 text-black flex flex-col min-h-screen">
-            <Header />
-            <NextTopLoader color="#4c1d95" showSpinner={false} shadow={false} />
+            <Suspense fallback={<LoadingAnimation />}>
+              <Header />
+              <NextTopLoader color="#4c1d95" showSpinner={false} shadow={false} />
+            </Suspense>
             <div className="max-w-4xl mt-6 mx-auto px-8 w-full">
               {children}
             </div>

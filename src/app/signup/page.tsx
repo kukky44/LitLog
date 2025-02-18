@@ -69,8 +69,6 @@ export default function SignUp() {
 
         return console.error("Signin failed");
       }else{
-        console.log("signin success");
-
         router.push('/library');
       }
     }

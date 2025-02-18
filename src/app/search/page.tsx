@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { BookType } from "@/src/types";
 import BookList from "../components/bookList";
 import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
@@ -24,7 +24,7 @@ interface GoogleBooksAPIResponse {
   items: Array<GoogleBooksAPIItems>;
 };
 
-export default function Search() {
+function SearchResult() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword")
   const [books, setBooks] = useState<BookType[]>([]);
@@ -80,4 +80,12 @@ export default function Search() {
         }
     </div>
   );
+}
+
+export default function Search() {
+  return (
+    <Suspense fallback={<LoadingAnimation />}>
+      <SearchResult />
+    </Suspense>
+  )
 }
