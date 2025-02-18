@@ -14,7 +14,8 @@ export default function BookList({books, registeredGoogleBookIds, mutate}: Books
 
   return (
     <>
-      {session ?
+      {!books.length ? <div>本が見つかりませんでした。</div>:
+      session ?
         registeredGoogleBookIds === null ? <div className="mt-8 text-center"><LoadingAnimation /></div>
         :
         <div className="grid grid-cols-2 gap-6">

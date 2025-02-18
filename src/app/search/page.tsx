@@ -22,11 +22,15 @@ interface GoogleBooksAPIItems {
 
 interface GoogleBooksAPIResponse {
   items: Array<GoogleBooksAPIItems>;
+  error: {
+    code: number
+  }
 };
 
 function SearchResult() {
   const searchParams = useSearchParams();
-  const keyword = searchParams.get("keyword")
+  const keyword = searchParams.get("keyword");
+  const [fetchError, setFetchError] = useState<string>("")
   const [books, setBooks] = useState<BookType[]>([]);
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
   const { data: session } = useSession();
@@ -35,6 +39,7 @@ function SearchResult() {
     fetcher,
     {
       onSuccess: (data) => {
+        if(data.error?.code === 429) setFetchError("Google booksの検索リミットを超過しました。");
         if(!data || !data?.items) return;
         const bookData: BookType[] = data.items.map((d: GoogleBooksAPIItems) => {
           const vInfo = d.volumeInfo;
@@ -73,6 +78,8 @@ function SearchResult() {
           <LoadingAnimation />
         </div>
       :
+      fetchError ?
+      <div>{fetchError}</div>:
       <div>
         <h2 className="mb-6 text-lg font-bold">検索結果</h2>
         {books && <BookList books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />}
