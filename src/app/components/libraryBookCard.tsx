@@ -27,8 +27,8 @@ const LibraryBookCard: React.FC<BookProps> = ({ bookData, isRegistered, mutate }
       <div className="bg-white text-black p-4 rounded">
         <h2 className="text-lg font-bold mb-1">{bookData.title}</h2>
         <div className="mb-2 text-sm">{bookData.author}</div>
-        <div className="text-center block">
-        {bookData.imageUrl && <Image width={450} height={800} priority={true} className="w-full" src={bookData.imageUrl} alt={`${bookData.title}のカバー`} />}
+        <div className="w-1/2 mx-auto">
+        {bookData.imageUrl && <Image width={450} height={800} priority={true} className="w-full rounded shadow-md" src={bookData.imageUrl} alt={`${bookData.title}のカバー`} />}
         </div>
         <div className="detail mt-4">
           <div className="text-xs mb-3">{bookData.description}</div>
