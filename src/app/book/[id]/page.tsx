@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation"
 import LibraryBookCard from "../../components/libraryBookCard";
 import { useCallback, useEffect, useState } from "react";
-import { BookType } from "@/src/types";
+import { BookType, FetchErrorType } from "@/src/types";
 import MemoList from "../../components/memoList";
 import UnRegisteredBookCard from "../../components/unRegisteredBookCard";
 import ReadingStatusRadio from "../../components/ui/readingStatusRadio";
@@ -35,8 +35,13 @@ export default function Page(){
           setIsRegistered(false);
         }
       },
-      onError: (e) => {
-        console.log(e);
+      onError: (e:FetchErrorType) => {
+        if(e.status === 404) {
+          getBookFromLocalStorage();
+          setIsRegistered(false);
+        } else {
+          console.log(e);
+        }
       }
     }
   );

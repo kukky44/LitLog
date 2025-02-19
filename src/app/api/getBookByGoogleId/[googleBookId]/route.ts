@@ -21,7 +21,7 @@ export async function GET(
       }
     })
 
-    if(!book) NextResponse.json({message: "Book is not registered"}, {status: 404});
+    if(!book) return NextResponse.json({message: "Book is not registered"}, {status: 404});
 
     return NextResponse.json(book, {status: 200});
   } catch (err) {
