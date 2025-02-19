@@ -2,78 +2,50 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { BookType } from "@/src/types";
+import { BookType, FetchErrorType } from "@/src/types";
 import BookList from "../components/bookList";
 import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { fetcher } from "../lib/fetcher";
 
-interface GoogleBooksAPIItems {
-  id: string;
-  volumeInfo: {
-    title: string;
-    authors?: string[];
-    description?: string;
-    imageLinks?: { thumbnail: string };
-    industryIdentifiers?: { type: string; identifier: string }[];
-  };
-}
-
-interface GoogleBooksAPIResponse {
-  items: Array<GoogleBooksAPIItems>;
-  error: {
-    code: number
-  }
-};
-
 function SearchResult() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword");
   const [fetchError, setFetchError] = useState<string>("")
-  const [books, setBooks] = useState<BookType[]>([]);
+  const [books, setBooks] = useState<BookType[] | null>(null);
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
   const { data: session } = useSession();
-  const { isLoading, mutate} = useSWR<GoogleBooksAPIResponse>(
-    `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance`,
+  const { isLoading, mutate} = useSWR<BookType[]>(
+    `/api/searchBook/${keyword}`,
     fetcher,
     {
       onSuccess: (data) => {
-        if(data.error?.code === 429) setFetchError("Google booksの検索リミットを超過しました。");
-        if(!data || !data?.items) return;
-        const bookData: BookType[] = data.items.map((d: GoogleBooksAPIItems) => {
-          const vInfo = d.volumeInfo;
-          let isbn: string = "";
+        if(!data) return console.log("no book found");
 
-          if(vInfo.industryIdentifiers && vInfo.industryIdentifiers[0].type === "ISBN_13"){
-            isbn = vInfo.industryIdentifiers[0].identifier;
-          }
-          return {
-            title: vInfo.title,
-            author: vInfo.authors?.join("、"),
-            description: vInfo.description,
-            imageUrl: vInfo.imageLinks?.thumbnail,
-            isbn: isbn,
-            googleBookId: d.id
-          } as BookType;
-        });
         if(session){
           fetch('/api/getRegisteredBookID')
           .then(res => res.json())
-          .then(data => {
-            bookData.map(item => {
-              item.id = data.find((d:BookType) => d.googleBookId === item.googleBookId)?.id;
-            })
-            setRegisteredGBookIds(data.map((d:BookType) => d.googleBookId));
+          .then(idData => {
+            data.map(item => {
+              item.id = idData.find((d:BookType) => d.googleBookId === item.googleBookId)?.id;
+            });
+            setRegisteredGBookIds(idData.map((ids:BookType) => ids.googleBookId));
           })
         }
-        setBooks(bookData);
+        setBooks(data);
+      },
+      onError: (err: FetchErrorType) => {
+        console.log(err.info);
+        //set an empty array to display limit error message
+        setBooks([]);
+        if(err.status === 429) setFetchError("Google booksの検索リミットを超過しました。");
       }
   });
 
   return (
     <div>
-      {isLoading?
+      {isLoading || books === null ?
         <div className="mt-6 text-center">
           <LoadingAnimation />
         </div>
@@ -82,7 +54,10 @@ function SearchResult() {
       <div>{fetchError}</div>:
       <div>
         <h2 className="mb-6 text-lg font-bold">検索結果</h2>
-        {books && <BookList books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />}
+        {books.length ?
+          <BookList books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />:
+          <div>本が見つかりませんでした。</div>
+        }
         </div>
         }
     </div>

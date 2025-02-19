@@ -10,6 +10,11 @@ export type BookType = {
   isStored?: boolean;
 }
 
+export type FetchErrorType = {
+  info?: Response;
+  status?: number;
+}
+
 export type MemoType = {
   id: string;
   content: string;
