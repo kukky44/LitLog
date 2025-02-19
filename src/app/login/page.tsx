@@ -7,7 +7,7 @@ import PrimaryButton from "../components/ui/buttons/primaryButton";
 import Link from "next/link";
 import ErrorMsg from "../components/ui/errorMsg";
 
-interface ErrorMsg {
+type ErrorMsg = {
   email?: string;
   password?: string;
   invalid?: string;

@@ -1,4 +1,4 @@
-interface ErrorProps {
+type ErrorProps = {
   msg?: string;
 }
 

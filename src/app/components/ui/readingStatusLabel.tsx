@@ -1,4 +1,4 @@
-interface RadioProps {
+type RadioProps = {
   status: number
 }
 

@@ -3,7 +3,7 @@ import SecondaryButton from "./secondaryButton";
 import { useSession } from "next-auth/react";
 import ButtonLoadingAnimation from "./buttonLoadingAnimation";
 
-interface ButtonProps {
+type ButtonProps = {
   bookId: string | undefined;
   mutate?: () => void;
   updateRegisteredState: (val: boolean) => void;

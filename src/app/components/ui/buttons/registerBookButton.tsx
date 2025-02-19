@@ -6,7 +6,7 @@ import NotRegisteredModal from "../../notRegisteredModal";
 import { BookType } from "@/src/types";
 import ButtonLoadingAnimation from "./buttonLoadingAnimation";
 
-interface ButtonProps {
+type ButtonProps = {
   book: BookType;
   mutate?: () => void;
   updateRegisteredState?: (val: boolean) => void;

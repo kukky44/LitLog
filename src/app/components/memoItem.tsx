@@ -1,6 +1,6 @@
 import { MemoType } from "@/src/types";
 
-interface MemoProps {
+type MemoProps = {
   memo: MemoType;
 }
 

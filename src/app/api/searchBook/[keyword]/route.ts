@@ -1,7 +1,7 @@
 import { BookType } from "@/src/types";
 import { NextRequest, NextResponse } from "next/server";
 
-interface GoogleBooksAPIItems {
+type GoogleBooksAPIItems = {
   id: string;
   volumeInfo: {
     title: string;

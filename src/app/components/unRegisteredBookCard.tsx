@@ -4,7 +4,7 @@ import { BookType } from "@/src/types"
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
 import Image from "next/image";
 
-interface BookProps {
+type BookProps = {
   bookData: BookType;
   mutate: () => void;
 }

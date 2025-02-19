@@ -3,7 +3,7 @@
 import { useRef, useState } from "react"
 import PrimaryButton from "./ui/buttons/primaryButton";
 
-interface BookProps {
+type BookProps = {
   bookId: string;
   mutate: () => void;
 }

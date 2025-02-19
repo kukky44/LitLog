@@ -7,7 +7,7 @@ import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
 import Image from "next/image";
 
-interface BookProps {
+type BookProps = {
   bookData: BookType;
   isRegistered: boolean;
   mutate: () => void;

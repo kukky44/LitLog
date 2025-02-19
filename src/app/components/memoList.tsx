@@ -6,7 +6,7 @@ import NewMemo from "./newMemo";
 import useSWR from "swr";
 import { fetcher } from "../lib/fetcher";
 
-interface MemoListProps {
+type MemoListProps = {
   bookId: string;
 }
 

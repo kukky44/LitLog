@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-interface RadioProps {
+type RadioProps = {
   bookId: string;
   status: number;
 }

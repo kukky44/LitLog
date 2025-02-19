@@ -4,7 +4,7 @@ import SecondaryButton from "./ui/buttons/secondaryButton";
 import { IoIosClose } from "react-icons/io";
 import { MouseEventHandler } from "react";
 
-interface ModalProps {
+type ModalProps = {
   closeModal: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
 }
 

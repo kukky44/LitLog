@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactElement } from "react"
 
-interface ButtonProps {
+type ButtonProps = {
   label: ReactElement | string;
   disabled?: boolean;
   clickEvent?: MouseEventHandler<HTMLButtonElement>;
