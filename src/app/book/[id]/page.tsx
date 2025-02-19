@@ -12,6 +12,7 @@ import { fetcher } from "../../lib/fetcher";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { IoChevronForward } from "react-icons/io5";
+import LoadingAnimation from "../../components/ui/buttons/loadingAnimation";
 
 export default function Page(){
   const [book, setBook] = useState<BookType | null>(null);
@@ -22,7 +23,7 @@ export default function Page(){
   const googleBookId: string = params.id ? String(params.id) : "";
   if(!googleBookId) console.log("No book id");
 
-  const { mutate} = useSWR<BookType>(
+  const { mutate, isLoading } = useSWR<BookType>(
     session ? `/api/getBookByGoogleId/${googleBookId}` : null,
     fetcher,
     {
@@ -62,7 +63,8 @@ export default function Page(){
 
   return (
     <div>
-      {book &&
+      {isLoading ? <div className="mt-8 text-center"><LoadingAnimation /></div>:
+      book &&
       isRegistered &&
       <div className="flex items-center gap-1 mb-4 text-sm">
         <Link className="hover:text-violet-800 transition" href="/library">
