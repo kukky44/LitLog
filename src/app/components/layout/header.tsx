@@ -35,7 +35,7 @@ export default function Header() {
   return (
     <header className="flex justify-between py-4 px-8 items-center bg-violet-50">
       <h1 className="text-2xl font-bold">
-        <Link href="/">LitLog</Link>
+        <Link href={session ? '/library' : '/'}>LitLog</Link>
       </h1>
       <nav>
         <ul className="flex justify-between gap-8 items-center">
