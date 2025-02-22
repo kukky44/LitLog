@@ -5,7 +5,7 @@ export type BookType = {
   description?: string;
   imageUrl?: string;
   isbn?: string;
-  googleBookId: string;
+  googleBookId?: string;
   readingStatus?: number;
   isStored?: boolean;
 }

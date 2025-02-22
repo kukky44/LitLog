@@ -55,7 +55,7 @@ function SearchResult() {
       <div>
         <h2 className="mb-6 text-lg font-bold">検索結果</h2>
         {books.length ?
-          <BookList books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />:
+          <BookList isLibrary={false} books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />:
           <div>本が見つかりませんでした。</div>
         }
         </div>

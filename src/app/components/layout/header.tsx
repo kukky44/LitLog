@@ -54,7 +54,7 @@ export default function Header() {
           }
           <li>
             <form className="flex" onSubmit={handleSubmit}>
-              <input value={searchInput ? searchInput : ""} onChange={handleChange} className="text-base text-gray-900 placeholder:text-gray-400 sm:text-sm/6 rounded px-2 py border border-gray-200" type="text" placeholder="本を検索" autoComplete="on" />
+              <input value={searchInput ? searchInput : ""} onChange={handleChange} className="text-base text-gray-900 placeholder:text-gray-400 sm:text-sm/6 rounded px-2 border border-gray-200" type="text" placeholder="本を検索" autoComplete="on" />
               <button className="hover:bg-violet-800 transition-all p-2 ml-2 bg-violet-900 rounded" type="submit"><IoSearch color="white" /></button>
             </form>
           </li>

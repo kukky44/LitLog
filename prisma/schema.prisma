@@ -20,7 +20,7 @@ model Book {
   description    String?
   author         String?
   imageUrl       String?
-  googleBookId   String
+  googleBookId   String?
   userId         String
   user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   readingStatus  Int       @default(0)

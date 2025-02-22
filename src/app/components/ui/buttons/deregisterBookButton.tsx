@@ -6,10 +6,11 @@ import ButtonLoadingAnimation from "./buttonLoadingAnimation";
 type ButtonProps = {
   bookId: string | undefined;
   mutate?: () => void;
-  updateRegisteredState: (val: boolean) => void;
+  updateRegisteredState?: (val: boolean) => void;
+  callBack?: () => void;
 }
 
-const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegisteredState}) => {
+const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegisteredState, callBack}) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const {data: session } = useSession();
 
@@ -30,8 +31,9 @@ const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegi
         })
         .then(res => res.json())
         .then(() => {
-          updateRegisteredState(false);
+          if(updateRegisteredState) updateRegisteredState(false);
           if(mutate) mutate();
+          if(callBack) callBack();
         })
         .catch(e => console.log(e)
         )

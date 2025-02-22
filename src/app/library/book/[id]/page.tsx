@@ -1,45 +1,43 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import LibraryBookCard from "../../components/libraryBookCard";
-import { useCallback, useEffect, useState } from "react";
+import LibraryBookCard from "../../../components/libraryBookCard";
+import { useState } from "react";
 import { BookType, FetchErrorType } from "@/src/types";
-import MemoList from "../../components/memoList";
-import UnRegisteredBookCard from "../../components/unRegisteredBookCard";
-import ReadingStatusRadio from "../../components/ui/readingStatusRadio";
+import MemoList from "../../../components/memoList";
+import ReadingStatusRadio from "../../../components/ui/readingStatusRadio";
 import useSWR from "swr";
-import { fetcher } from "../../lib/fetcher";
+import { fetcher } from "../../../lib/fetcher";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { IoChevronForward } from "react-icons/io5";
-import LoadingAnimation from "../../components/ui/buttons/loadingAnimation";
+import LoadingAnimation from "../../../components/ui/buttons/loadingAnimation";
 
 export default function Page(){
   const [book, setBook] = useState<BookType | null>(null);
-  const [isRegistered, setIsRegistered] = useState<boolean>(false);
-  const {data: session} = useSession();
+  const {status} = useSession();
+  if(status === "unauthenticated"){
+    console.log("no logged in user");
+  }
 
   const params = useParams();
-  const googleBookId: string = params.id ? String(params.id) : "";
-  if(!googleBookId) console.log("No book id");
+  const bookId: string = params.id ? String(params.id) : "";
+  if(!bookId) console.log("No book id");
 
   const { mutate, isLoading } = useSWR<BookType>(
-    session ? `/api/getBookByGoogleId/${googleBookId}` : null,
+    `/api/getBookByID/${bookId}`,
     fetcher,
     {
       onSuccess: (data) => {
         if(data) {
           setBook(data);
-          setIsRegistered(true);
         } else {
-          getBookFromLocalStorage();
-          setIsRegistered(false);
+          console.log("no book found");
         }
       },
       onError: (e:FetchErrorType) => {
         if(e.status === 404) {
-          getBookFromLocalStorage();
-          setIsRegistered(false);
+          console.log(e);
         } else {
           console.log(e);
         }
@@ -47,25 +45,10 @@ export default function Page(){
     }
   );
 
-  const getBookFromLocalStorage = useCallback(() => {
-    const bookData = localStorage.getItem(String(googleBookId));
-    if(bookData) setBook(JSON.parse(bookData));
-    setIsRegistered(false);
-  },[googleBookId]);
-
-  useEffect(() => {
-    if(!session) {
-      getBookFromLocalStorage();
-      setIsRegistered(false);
-    }
-  }, [session, getBookFromLocalStorage]);
-
-
   return (
     <div>
       {isLoading ? <div className="mt-8 text-center"><LoadingAnimation /></div>:
       book &&
-      isRegistered &&
       <div className="flex items-center gap-1 mb-4 text-sm">
         <Link className="hover:text-violet-800 transition" href="/library">
           ライブラリ
@@ -73,11 +56,11 @@ export default function Page(){
         <div><IoChevronForward size={16}/></div>
         <div>{book.title}</div>
       </div>}
-      {isRegistered ? book?.id &&
+      {book?.id &&
       <div>
         <div className="grid grid-cols-5 gap-4 w-full">
           <div className="col-span-2 top-6 sticky">
-            <LibraryBookCard bookData={book} isRegistered={isRegistered} mutate={mutate} />
+            <LibraryBookCard bookData={book} isRegistered={true} mutate={mutate} />
           </div>
           <div className="col-span-3 rounded bg-white text-black">
             {book.readingStatus !== undefined &&
@@ -88,12 +71,6 @@ export default function Page(){
             <MemoList bookId={book.id} />
           </div>
         </div>
-      </div>
-        :
-      <div>
-        {book &&
-          <UnRegisteredBookCard bookData={book} mutate={mutate} />
-        }
       </div>
       }
     </div>

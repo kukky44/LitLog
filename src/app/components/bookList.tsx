@@ -5,21 +5,31 @@ import { useSession } from "next-auth/react";
 
 type BooksProps = {
   books: BookType[];
-  registeredGoogleBookIds: string[] | null;
+  registeredGoogleBookIds?: string[] | null;
+  isLibrary: boolean;
   mutate: () => void;
 }
 
-export default function BookList({books, registeredGoogleBookIds, mutate}: BooksProps) {
+export default function BookList({books, registeredGoogleBookIds, mutate, isLibrary}: BooksProps) {
   const {data: session} = useSession();
 
-  return (
+  if(isLibrary) return (
+    <div className="grid grid-cols-2 gap-6">
+      {books?.map(book=> {
+        return (
+          <BookCard key={book.id} book={book} isRegistered={true} mutate={mutate} isLibrary={isLibrary} />
+        )
+      })}
+    </div>
+  )
+  else return (
     <>
       {session ?
-        registeredGoogleBookIds === null ? <div className="mt-8 text-center"><LoadingAnimation /></div>
+        registeredGoogleBookIds === null || registeredGoogleBookIds === undefined? <div className="mt-8 text-center"><LoadingAnimation /></div>
         :
         <div className="grid grid-cols-2 gap-6">
           {books?.map(book=> {
-            const registered = registeredGoogleBookIds.length ? registeredGoogleBookIds.includes(book.googleBookId) : false;
+            const registered = registeredGoogleBookIds.length && book.googleBookId ? registeredGoogleBookIds.includes(book.googleBookId) : false;
 
             return (
               <BookCard key={book.googleBookId} book={book} isRegistered={registered} mutate={mutate} />
@@ -33,9 +43,8 @@ export default function BookList({books, registeredGoogleBookIds, mutate}: Books
             return (
               <BookCard key={book.googleBookId} book={book} isRegistered={false} mutate={mutate} />
             )
-          }
-        )}
-      </div>
+          })}
+        </div>
       }
     </>
   )

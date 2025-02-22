@@ -4,20 +4,18 @@ import { prisma } from "../../../lib/prisma";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ googleBookId: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await serverAuth();
   if(!session) return NextResponse.json({message: "No logged in user"}, {status: 403});
-  const uid = session?.user.id;
 
-  const gBookId = (await params).googleBookId;
-  if(!gBookId) return NextResponse.json({message: "Book Google ID is required."}, { status: 400 });
+  const bookId = (await params).id;
+  if(!bookId) return NextResponse.json({message: "Book ID is required."}, { status: 400 });
 
   try {
     const book = await prisma.book.findFirst({
       where: {
-        userId: uid,
-        googleBookId: gBookId
+        id: bookId
       }
     })
 

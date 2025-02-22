@@ -14,8 +14,8 @@ const NotRegisteredModal: React.FC<ModalProps> = ({closeModal}) => {
     closeModal(e);
   }
 
-  const stopPropagation: MouseEventHandler<HTMLDivElement> = (event) => {
-    event.stopPropagation();
+  const stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
   };
 
   return (

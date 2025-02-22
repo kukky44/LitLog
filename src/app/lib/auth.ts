@@ -34,8 +34,6 @@ export const config = {
           email: credentials.email,
           password: credentials.password,
         };
-        console.log("ログインプロセス");
-        console.warn("ログインプロセス");
         const res = await fetch(
           `${process.env.API_URL}/api/auth/login`,
           {

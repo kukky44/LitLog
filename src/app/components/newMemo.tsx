@@ -62,7 +62,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
         </div>
       </div>
       <div className="mt-2">
-        <textarea ref={testAreaRef} value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded" rows={3} />
+        <textarea ref={testAreaRef} value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded p-1" rows={3} />
       </div>
       <div className="mt-3 flex justify-end">
         <PrimaryButton label="追加" clickEvent={handleSubmit} disabled={!memoInput} />
