@@ -51,7 +51,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
       <div className="flex justify-between items-center">
         <TitleText text={tMemo("add")} />
         <div className="flex justify-between">
-          <div>
+          <div className="flex items-center">
             <label htmlFor="pageNum" className="text-sm mr-1">{tMemo("page")}</label>
             <input
               value={pageNum}

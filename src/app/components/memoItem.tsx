@@ -23,7 +23,10 @@ const MemoItem: React.FC<MemoProps> = ({ memo }) => {
         <div className="px-2 py-4">
           <div className="text-gray-600 flex justify-between items-center text-sm">
             <div>{updateAat}</div>
-            <div><span className="text-xs">{tMemo("page")}</span>{memo.pageNumber}</div>
+            <div className="flex items-center gap-1">
+              <div className="text-xs">{tMemo("page")}</div>
+              <div>{memo.pageNumber}</div>
+            </div>
           </div>
           <div className="mt-2">
             {memo.content}
