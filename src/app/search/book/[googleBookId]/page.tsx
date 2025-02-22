@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react";
 import { BookType} from "@/src/types";
 import UnRegisteredBookCard from "../../../components/unRegisteredBookCard";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { IoChevronForward } from "react-icons/io5";
 
 export default function Page(){
