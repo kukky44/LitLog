@@ -1,14 +1,18 @@
-import Link from "next/link";
+import { Link } from "@/src/i18n/routing";
 import PrimaryButton from "./ui/buttons/primaryButton";
 import SecondaryButton from "./ui/buttons/secondaryButton";
 import { IoIosClose } from "react-icons/io";
 import { MouseEventHandler } from "react";
+import { useTranslations } from "next-intl";
 
 type ModalProps = {
   closeModal: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
 }
 
 const NotRegisteredModal: React.FC<ModalProps> = ({closeModal}) => {
+  const tErrMsg = useTranslations("errMsg");
+  const tButtons = useTranslations("buttons");
+
   const handleWrapperClick:MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     closeModal(e);
@@ -25,13 +29,13 @@ const NotRegisteredModal: React.FC<ModalProps> = ({closeModal}) => {
           <button className="p-4 transition opacity-100 hover:opacity-70" onClick={closeModal}><IoIosClose size={32} /></button>
         </div>
         <div className="px-6 pb-6">
-          <div className="mb-8">本の登録にはログインまたはユーザー登録が必要です。</div>
-          <div className="flex gap-6 justify-between">
+          <div className="mb-8">{tErrMsg("loginRequired")}</div>
+          <div className="flex gap-4">
             <Link href="/login">
-              <SecondaryButton label="ログイン" />
+              <SecondaryButton label={tButtons("login")} />
             </Link>
             <Link href="/signup">
-              <PrimaryButton label="ユーザー登録" />
+              <PrimaryButton label={tButtons("signup")} />
             </Link>
           </div>
         </div>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type RadioProps = {
@@ -7,11 +8,10 @@ type RadioProps = {
   status: number;
 }
 
-const statusLabels = ["未読", "読書中", "読了"];
-
-
 const ReadingStatusRadio: React.FC<RadioProps> = ({bookId, status}) => {
   const [radioValue, setRadioValue] = useState(status);
+  const tReadingStatus = useTranslations("readingStatus");
+  const statusLabels = [tReadingStatus("toRead"), tReadingStatus("reading"), tReadingStatus("finished")];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try{

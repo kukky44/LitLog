@@ -3,11 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { BookType, FetchErrorType } from "@/src/types";
-import BookList from "../components/bookList";
-import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
+import BookList from "../../components/bookList";
+import LoadingAnimation from "../../components/ui/buttons/loadingAnimation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-import { fetcher } from "../lib/fetcher";
+import { fetcher } from "../../lib/fetcher";
+import { useLocale, useTranslations } from "next-intl";
+import TitleText from "../../components/ui/titleText";
 
 function SearchResult() {
   const searchParams = useSearchParams();
@@ -16,8 +18,12 @@ function SearchResult() {
   const [books, setBooks] = useState<BookType[] | null>(null);
   const [registeredGBookIds, setRegisteredGBookIds] = useState<string[] | null>(null);
   const { data: session } = useSession();
+
+  const locale = useLocale();
+  const tSearch = useTranslations("searchPage");
+
   const { isLoading, mutate} = useSWR<BookType[]>(
-    `/api/searchBook/${keyword}`,
+    `/api/searchBook/${keyword}?locale=${locale}`,
     fetcher,
     {
       onSuccess: (data) => {
@@ -53,10 +59,10 @@ function SearchResult() {
       fetchError ?
       <div>{fetchError}</div>:
       <div>
-        <h2 className="mb-6 text-lg font-bold">検索結果</h2>
+        <TitleText text={tSearch("title")} className="mb-6" />
         {books.length ?
           <BookList isLibrary={false} books={books} registeredGoogleBookIds={registeredGBookIds} mutate={mutate} />:
-          <div>本が見つかりませんでした。</div>
+          <div>{tSearch("noResult")}</div>
         }
         </div>
         }

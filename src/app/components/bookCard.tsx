@@ -1,7 +1,7 @@
 "use client"
 
 import { BookType } from "@/src/types"
-import Link from "next/link";
+import { Link } from "@/src/i18n/routing";
 import { useState } from "react";
 import ReadingStatusLabel from "./ui/readingStatusLabel";
 import RegsiterBookButton from "./ui/buttons/registerBookButton";

@@ -1,5 +1,5 @@
-import MainLibrary from "../components/mainLibrary";
-import { serverAuth } from "../lib/auth";
+import MainLibrary from "../../components/mainLibrary";
+import { serverAuth } from "../../lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Library() {

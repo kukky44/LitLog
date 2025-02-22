@@ -3,7 +3,8 @@
 import { BookType } from "@/src/types"
 import RegsiterBookButton from "./ui/buttons/registerBookButton";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
+import TitleText from "./ui/titleText";
 
 type BookProps = {
   bookData: BookType;
@@ -19,7 +20,7 @@ const UnRegisteredBookCard: React.FC<BookProps> = ({ bookData }) => {
     <>
     {bookData &&
       <div className="mx-auto bg-white text-black p-4 rounded">
-        <h2 className="text-lg font-bold mb-1">{bookData.title}</h2>
+        <TitleText text={bookData.title} className="mb-1" />
         <div className="mb-4 text-sm">{bookData.author}</div>
         <div className="grid grid-flow-col grid-cols-5 gap-4">
           <div className="col-span-1">

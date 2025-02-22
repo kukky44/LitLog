@@ -1,0 +1,78 @@
+{
+  "home": {
+    "copy": "Read, Record, Reflect.",
+    "desc": "LitLog is an app designed to help you organize and keep track of your reading journey.",
+    "howtoTitle": "How to use",
+    "howto": {
+      "registerBook": {
+        "title": "Register Books",
+        "desc": "Register books you'd like to read. You can also search for books via the search form (from Google Books API)."
+      },
+      "manageStatus": {
+        "title": "Manage Reading Status",
+        "desc": "Set your reading status to 'Unread', 'Reading', or 'Finished'."
+      },
+      "addNotes": {
+        "title": "Add Notes",
+        "desc": "Record thoughts and insights as threads for each book."
+      },
+      "review": {
+        "title": "Review",
+        "desc": "Review your past reading records to discover new insights."
+      }
+    }
+  },
+  "memo": {
+    "add": "Add Memo",
+    "page": "Page:"
+  },
+  "readingStatus": {
+    "toRead": "To Read",
+    "reading": "Reading",
+    "finished": "Finished"
+  },
+  "searchPage": {
+    "title": "Result",
+    "noResult": "No book found."
+  },
+  "buttons": {
+    "signup": "Sign up",
+    "login": "Login",
+    "logout": "Logout",
+    "registerBook": "Register book",
+    "deRegisterBook": "Deregister",
+    "register": "Sign up",
+    "add": "Add",
+    "cancel": "Cancel"
+  },
+  "links": {
+    "library": "Library",
+    "login": "Login here",
+    "signup": "Sign up here"
+  },
+  "form": {
+    "searchPlaceholder": "Search books",
+    "mailLabel": "E-mail",
+    "passwordLabel": "Password",
+    "signupTitle": "Sign up",
+    "loginTitle": "Login"
+  },
+  "newBook": {
+    "modalTitle": "Add Book",
+    "title": "Title",
+    "author": "Author (optional)",
+    "description": "Description (optional)"
+  },
+  "errMsg": {
+    "pleaseAddBook": "Please add books.",
+    "titleRequired": "Please enter the book title.",
+    "failedAddBook": "Failed to add the book.",
+    "emailRequired": "Please enter your email address.",
+    "invalidEmail": "The email address is not valid.",
+    "passwordRequired": "Please enter your password.",
+    "passwordLength": "Password should be more than 6 characters.",
+    "usedEmail": "The email address already exists.",
+    "failedLogin": "Your email address or password is not correct.",
+    "loginRequired": "Please signup or login to register books."
+  }
+}

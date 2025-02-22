@@ -1,12 +1,15 @@
+import { useTranslations } from "next-intl";
+
 type RadioProps = {
   status: number
 }
 
-const statusLabels = ["未読", "読書中", "読了"];
 const labelBgColors = ["bg-violet-800", "bg-green-800", "bg-white"];
 const labelTextColors = ["text-white", "text-white", "text-black"];
 
 const ReadingStatusLabel: React.FC<RadioProps> = ({status}) => {
+  const tReadingStatus = useTranslations("readingStatus");
+  const statusLabels = [tReadingStatus("toRead"), tReadingStatus("reading"), tReadingStatus("finished")];
 
   return(
     <div>

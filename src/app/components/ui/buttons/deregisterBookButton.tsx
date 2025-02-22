@@ -2,6 +2,7 @@ import { useState } from "react";
 import SecondaryButton from "./secondaryButton";
 import { useSession } from "next-auth/react";
 import ButtonLoadingAnimation from "./buttonLoadingAnimation";
+import { useTranslations } from "next-intl";
 
 type ButtonProps = {
   bookId: string | undefined;
@@ -13,6 +14,8 @@ type ButtonProps = {
 const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegisteredState, callBack}) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const {data: session } = useSession();
+
+  const tButtons = useTranslations("buttons");
 
   const handleDeregister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ const DeregsiterBookButton: React.FC<ButtonProps> = ({bookId, mutate, updateRegi
   }
 
   return (
-    <SecondaryButton clickEvent={handleDeregister} label={isProcessing ? <ButtonLoadingAnimation /> : "登録解除"} disabled={isProcessing}/>
+    <SecondaryButton clickEvent={handleDeregister} label={isProcessing ? <ButtonLoadingAnimation /> : tButtons("deRegisterBook")} disabled={isProcessing}/>
   )
 }
 

@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import PrimaryButton from "../components/ui/buttons/primaryButton";
-import Link from "next/link";
-import ErrorMsg from "../components/ui/errorMsg";
+import { useRouter } from "@/src/i18n/routing";
+import PrimaryButton from "../../components/ui/buttons/primaryButton";
+import { Link } from "@/src/i18n/routing";
+import ErrorMsg from "../../components/ui/errorMsg";
+import { useTranslations } from "next-intl";
+import ButtonLoadingAnimation from "../../components/ui/buttons/buttonLoadingAnimation";
+import TitleText from "../../components/ui/titleText";
 
 type ErrorMsg = {
   email?: string;
@@ -18,7 +21,13 @@ export default function SignUp() {
   const [inputEmail, setInputEmail] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
   const [errors, setErrors] = useState<ErrorMsg>({});
+  const [isProcessing, seetIsProcessing] = useState<boolean>(false);
   const router = useRouter();
+
+  const tButtons = useTranslations("buttons");
+  const tForm = useTranslations("form");
+  const tLinks = useTranslations("links");
+  const tErrMsg = useTranslations("errMsg");
 
   async function handleSubmit (e: React.FormEvent){
     e.preventDefault();
@@ -27,21 +36,22 @@ export default function SignUp() {
 
     // validate email address
     if(!inputEmail){
-      err.email = "メールアドレスを入力してください。";
+      err.email = tErrMsg("emailRequired");
     } else if(!emailExp.test(inputEmail)){
-      err.email = "入力されたメールアドレスは有効ではありません";
+      err.email = tErrMsg("invalidEmail");
     }
 
     // validate password
     if(!inputPassword) {
-      err.password = "パスワードを入力してください。";
+      err.password = tErrMsg("passwordRequired");
     } else if(inputPassword.length < 7){
-      err.password = "パスワードは7文字以上で設定してください。"
+      err.password = tErrMsg("passwordLength");
     }
 
     setErrors(err);
     if(Object.keys(err).length) return;
 
+    seetIsProcessing(true);
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json"},
@@ -54,7 +64,8 @@ export default function SignUp() {
     const data = await res.json();
 
     if(res.status === 422 && data.message === "existing email") {
-      setErrors({email: "すでに存在するメールアドレスです。"});
+      setErrors({email: tErrMsg("usedEmail")});
+      seetIsProcessing(false);
       return;
     }
 
@@ -66,7 +77,7 @@ export default function SignUp() {
       });
 
       if (!result || result?.error) {
-
+        seetIsProcessing(false);
         return console.error("Signin failed");
       }else{
         router.push('/library');
@@ -79,22 +90,22 @@ export default function SignUp() {
 
   return (
     <div className="w-1/2 mx-auto">
-      <h2 className="mb-4 text-lg font-bold">ユーザー登録</h2>
+      <TitleText text={tForm("signupTitle")} className="mb-4" />
       <form onSubmit={handleSubmit} className="min-w-80">
         <div className="text-black mb-6" >
-          <label className={labelClassName} htmlFor="email">メールアドレス</label>
+          <label className={labelClassName} htmlFor="email">{tForm("mailLabel")}</label>
           <input autoComplete="off" value={inputEmail} onChange={(e => setInputEmail(e.target.value))} className={inputClassName} type="email" id="email" />
           {errors.email && <ErrorMsg msg={errors.email} />}
 
-          <label  className={labelClassName} htmlFor="password">パスワード</label>
+          <label  className={labelClassName} htmlFor="password">{tForm("passwordLabel")}</label>
           <input value={inputPassword} onChange={(e => setInputPassword(e.target.value))} className={`${inputClassName}`} type="password" id="password" />
           {errors.password && <ErrorMsg msg={errors.password} />}
         </div>
         <div className="flex justify-end">
-          <PrimaryButton label="登録" />
+          <PrimaryButton label={isProcessing ? <ButtonLoadingAnimation /> : tButtons("signup")} disabled={isProcessing} />
         </div>
       </form>
-      <div className="mt-5 text-right underline"><Link href="/login">ログインはこちら</Link></div>
+      <div className="mt-5 text-right underline"><Link href="/login">{tLinks("login")}</Link></div>
     </div>
   );
 }

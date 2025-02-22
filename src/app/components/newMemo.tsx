@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react"
 import PrimaryButton from "./ui/buttons/primaryButton";
+import { useTranslations } from "next-intl";
+import TitleText from "./ui/titleText";
 
 type BookProps = {
   bookId: string;
@@ -12,6 +14,9 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
   const [memoInput, setMemoInput] = useState<string>("");
   const [pageNum, setPageNum] = useState<number | string>("");
   const testAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  const tButtons = useTranslations("buttons");
+  const tMemo = useTranslations("memo");
 
   const handlePageNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputNum = e.target.value;
@@ -44,10 +49,10 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
   return (
     <form className="py-2 px-6">
       <div className="flex justify-between items-center">
-        <p className="font-bold text-lg">メモを追加</p>
+        <TitleText text={tMemo("add")} />
         <div className="flex justify-between">
           <div>
-            <label htmlFor="pageNum" className="text-sm">ページ：</label>
+            <label htmlFor="pageNum" className="text-sm mr-1">{tMemo("page")}</label>
             <input
               value={pageNum}
               onChange={handlePageNumChange}
@@ -65,7 +70,7 @@ const NewMemo: React.FC<BookProps> = ({ bookId, mutate }) => {
         <textarea ref={testAreaRef} value={memoInput} onChange={(e)=>setMemoInput(e.target.value)} className="w-full border border-gray-300 rounded p-1" rows={3} />
       </div>
       <div className="mt-3 flex justify-end">
-        <PrimaryButton label="追加" clickEvent={handleSubmit} disabled={!memoInput} />
+        <PrimaryButton label={tButtons("add")} clickEvent={handleSubmit} />
       </div>
     </form>
   )

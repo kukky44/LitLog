@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import NotRegisteredModal from "../../notRegisteredModal";
 import { BookType } from "@/src/types";
 import ButtonLoadingAnimation from "./buttonLoadingAnimation";
+import { useTranslations } from "next-intl";
 
 type ButtonProps = {
   book: BookType;
@@ -17,6 +18,8 @@ const RegsiterBookButton: React.FC<ButtonProps> = ({book, mutate, updateRegister
   const [isProcessing, setIsProcessing] = useState(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const {data: session } = useSession();
+
+  const tButtons = useTranslations("buttons");
 
   const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -45,7 +48,7 @@ const RegsiterBookButton: React.FC<ButtonProps> = ({book, mutate, updateRegister
 
   return (
     <>
-      <PrimaryButton clickEvent={handleRegister} label={isProcessing ? <ButtonLoadingAnimation /> : "本を登録"} disabled={isProcessing} />
+      <PrimaryButton clickEvent={handleRegister} label={isProcessing ? <ButtonLoadingAnimation /> : tButtons("registerBook")} disabled={isProcessing} />
       {showModal&&
         <NotRegisteredModal closeModal={closeModal} />
       }

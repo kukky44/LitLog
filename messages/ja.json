@@ -1,0 +1,78 @@
+{
+  "home": {
+    "copy": "読む、記録する、振り返る。",
+    "desc": "LitLogは、書籍を登録し、読書の進捗を管理しながらメモを残せる読書ログアプリです。",
+    "howtoTitle": "使い方",
+    "howto": {
+      "registerBook": {
+        "title": "本を登録",
+        "desc": "読みたい本を登録。検索フォームから本を探すこともできます（Google Books APIより）。"
+      },
+      "manageStatus": {
+        "title": "読書ステータスを管理",
+        "desc": "「未読・読書中・読了」の読書状況を設定。"
+      },
+      "addNotes": {
+        "title": "メモを追加",
+        "desc": "気づきや感想を本ごとにスレッド型で記録。"
+      },
+      "review": {
+        "title": "振り返り",
+        "desc": "過去の読書記録を見返して、新しい発見を。"
+      }
+    }
+  },
+  "memo": {
+    "add": "メモを追加",
+    "page": "ページ："
+  },
+  "readingStatus": {
+    "toRead": "未読",
+    "reading": "読書中",
+    "Finished": "読了"
+  },
+  "searchPage": {
+    "title": "検索結果",
+    "noResult": "本が見つかりませんでした。"
+  },
+  "buttons": {
+    "signup": "ユーザー登録",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "registerBook": "本を登録",
+    "deRegisterBook": "登録解除",
+    "register": "登録",
+    "add": "追加",
+    "cancel": "キャンセル"
+  },
+  "links": {
+    "library": "ライブラリ",
+    "login": "ログインはこちら",
+    "signup": "ユーザー登録はこちら"
+  },
+  "form": {
+    "searchPlaceholder": "本を検索",
+    "mailLabel": "メールアドレス",
+    "passwordLabel": "パスワード",
+    "signupTitle": "ユーザー登録",
+    "loginTitle": "ログイン"
+  },
+  "newBook": {
+    "modalTitle": "本を追加",
+    "title": "タイトル",
+    "author": "著者（任意）",
+    "description": "説明（任意）"
+  },
+  "errMsg": {
+    "pleaseAddBook": "本を追加してください。",
+    "titleRequired": "タイトルを入力してください。",
+    "failedAddBook": "本を登録できませんでした。",
+    "emailRequired": "メールアドレスを入力してください。",
+    "invalidEmail": "入力されたメールアドレスは有効ではありません",
+    "passwordRequired": "パスワードを入力してください。",
+    "passwordLength": "パスワードは7文字以上で設定してください。",
+    "usedEmail": "すでに存在するメールアドレスです。",
+    "failedLogin": "メールアドレスまたはパスワードが正しくありません。",
+    "loginRequired": "本の登録にはログインまたはユーザー登録が必要です。"
+  }
+}
