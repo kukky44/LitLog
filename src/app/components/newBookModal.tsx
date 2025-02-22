@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import PrimaryButton from "./ui/buttons/primaryButton";
 import { IoIosClose } from "react-icons/io";
 import ErrorMsg from "./ui/errorMsg";

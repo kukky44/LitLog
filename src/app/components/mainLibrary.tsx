@@ -18,7 +18,7 @@ export default function MainLibrary() {
     setShowModal(false);
   }
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     setShowModal(true);
   }
 
