@@ -1,20 +1,24 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import LibraryBookCard from "../../../components/libraryBookCard";
+import LibraryBookCard from "../../../../components/libraryBookCard";
 import { useState } from "react";
 import { BookType, FetchErrorType } from "@/src/types";
-import MemoList from "../../../components/memoList";
-import ReadingStatusRadio from "../../../components/ui/readingStatusRadio";
+import MemoList from "../../../../components/memoList";
+import ReadingStatusRadio from "../../../../components/ui/readingStatusRadio";
 import useSWR from "swr";
-import { fetcher } from "../../../lib/fetcher";
+import { fetcher } from "../../../../lib/fetcher";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { Link } from "@/src/i18n/routing";
 import { IoChevronForward } from "react-icons/io5";
-import LoadingAnimation from "../../../components/ui/buttons/loadingAnimation";
+import LoadingAnimation from "../../../../components/ui/buttons/loadingAnimation";
+import { useTranslations } from "next-intl";
 
 export default function Page(){
   const [book, setBook] = useState<BookType | null>(null);
+
+  const tLinks = useTranslations("links");
+
   const {status} = useSession();
   if(status === "unauthenticated"){
     console.log("no logged in user");
@@ -51,7 +55,7 @@ export default function Page(){
       book &&
       <div className="flex items-center gap-1 mb-4 text-sm">
         <Link className="hover:text-violet-800 transition" href="/library">
-          ライブラリ
+          {tLinks("library")}
         </Link>
         <div><IoChevronForward size={16}/></div>
         <div>{book.title}</div>

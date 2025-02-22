@@ -17,13 +17,16 @@ export async function GET(
   { params }: { params: Promise<{ keyword: string }> }
 ) {
   const keyword = (await params).keyword;
+  const url = new URL(request.url);
+  const locale = url.searchParams.get("locale") || "ja";
+
   if(!keyword) return NextResponse.json({message: "No keyword"}, { status: 400 });
 
   try {
     let bookData: BookType[] = [];
 
     await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=ja&maxResults=10&orderBy=relevance&key=${process.env.GOOGLE_API_KEY}`,
+      `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=${locale}&maxResults=10&orderBy=relevance&key=${process.env.GOOGLE_API_KEY}`,
       { next: {revalidate: 1800} }
     )
     .then(res => res.json())

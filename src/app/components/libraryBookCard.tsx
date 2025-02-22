@@ -4,8 +4,9 @@ import { BookType } from "@/src/types"
 import { useSession } from "next-auth/react";
 import DeregsiterBookButton from "./ui/buttons/deregisterBookButton";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
 import BookIcon from "../../assets/images/bookIcon.svg";
+import TitleText from "./ui/titleText";
 
 type BookProps = {
   bookData: BookType;
@@ -16,13 +17,14 @@ type BookProps = {
 const LibraryBookCard: React.FC<BookProps> = ({ bookData, mutate }) => {
   const { status } = useSession();
   const router = useRouter();
+
   if(status === "unauthenticated") router.push("/login");
 
   return (
     <>
     {bookData &&
       <div className="bg-white text-black p-4 rounded">
-        <h2 className="text-lg font-bold mb-1">{bookData.title}</h2>
+        <TitleText text={bookData.title} className="mb-1" />
         <div className="mb-2 text-sm">{bookData.author}</div>
         <div className="w-1/2 mx-auto">
         {bookData.imageUrl ?

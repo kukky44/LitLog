@@ -2,8 +2,8 @@
 
 import { useParams, useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react";
-import { BookType} from "@/src/types";
-import UnRegisteredBookCard from "../../../components/unRegisteredBookCard";
+import { BookType } from "@/src/types";
+import UnRegisteredBookCard from "../../../../components/unRegisteredBookCard";
 import { useSession } from "next-auth/react";
 import { IoChevronForward } from "react-icons/io5";
 
