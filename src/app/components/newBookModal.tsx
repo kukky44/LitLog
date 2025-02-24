@@ -94,7 +94,7 @@ const NewBookModal: React.FC<ModalProps> = ({closeModal, mutate}) => {
             <textarea id="desc" name="description" value={bookData.description} onChange={handleChange} className="w-full border border-gray-300 rounded p-2" rows={3} />
           </div>
           <div className="flex gap-4 justify-end mt-6">
-            <button className="hover:opacity-60 transition" onClick={handleCloseClick}>{tButtons("cancel")}</button>
+            <button className="hover:opacity-70 transition text-violet-900" onClick={handleCloseClick}>{tButtons("cancel")}</button>
             <PrimaryButton label={tButtons("add")} clickEvent={handleClick} />
           </div>
         </form>

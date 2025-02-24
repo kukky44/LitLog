@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react"
 import PrimaryButton from "../ui/buttons/primaryButton";
 import { useTranslations } from "next-intl";
+import LangSwitcher from "../ui/langSwitcher";
 
 export default function Header() {
   const [searchInput, setSearchInput] = useState<string | null>(null);
@@ -62,6 +63,9 @@ export default function Header() {
               <input value={searchInput ? searchInput : ""} onChange={handleChange} className="text-base text-gray-900 placeholder:text-gray-400 sm:text-sm/6 rounded px-2 border border-gray-200" type="text" placeholder={tForm("searchPlaceholder")} autoComplete="on" />
               <button className="hover:bg-violet-800 transition-all p-2 ml-2 bg-violet-900 rounded" type="submit"><IoSearch color="white" /></button>
             </form>
+          </li>
+          <li>
+            <LangSwitcher />
           </li>
         </ul>
       </nav>
