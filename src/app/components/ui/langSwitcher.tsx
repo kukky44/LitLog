@@ -5,7 +5,7 @@ import { useLocale } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-const statusLabels = ["あ", "A"];
+const langLabels = ["あ", "A"];
 const locales = ["ja", "en"];
 
 const LangSwitcher: React.FC = () => {
@@ -53,17 +53,17 @@ const LangSwitcher: React.FC = () => {
 
   return(
     <div className="flex">
-      {statusLabels.map((sLabel, index) => (
+      {langLabels.map((label, index) => (
         <label
           className="py-0.5 first:pl-0.5 last:pr-0.5 box-border first:rounded-l-full first:border-r-0 last:rounded-r-full last:border-l-0 cursor-pointer border border-gray-200"
           key={index}
-          htmlFor={`radio-${index}`}
+          htmlFor={`langRadio-${label}`}
         >
           <input
             className="hidden"
             type="radio"
-            name="readingstatus"
-            id={`radio-${index}`}
+            name="langSwitcher"
+            id={`langRadio-${label}`}
             onChange={handleChange}
             checked={index === radioValue}
             value={index}
@@ -73,7 +73,7 @@ const LangSwitcher: React.FC = () => {
               index === radioValue ? 'bg-violet-900 text-white' : 'text-black'
             }`}
           >
-            {sLabel}
+            {label}
           </span>
         </label>
       ))}

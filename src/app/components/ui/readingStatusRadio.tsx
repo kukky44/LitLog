@@ -42,13 +42,13 @@ const ReadingStatusRadio: React.FC<RadioProps> = ({bookId, status}) => {
         <label
           className={`py-2 px-3 first:pl-4 last:pr-4 box-border first:rounded-l-full first:border-r-0 last:rounded-r-full last:border-l-0 cursor-pointer border border-gray-200 has-[input:checked]:bg-violet-800 has-[input:checked]:text-white has-[input:checked]:border-violet-800`}
           key={index}
-          htmlFor={`radio-${index}`}
+          htmlFor={`readingStatusRadio-${sLabel}`}
         >
           <input
             className="hidden"
             type="radio"
             name="readingstatus"
-            id={`radio-${index}`}
+            id={`readingStatusRadio-${sLabel}`}
             onChange={handleChange}
             checked={index === radioValue}
             value={index}
