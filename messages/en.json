@@ -47,6 +47,7 @@
   },
   "links": {
     "library": "Library",
+    "search": "Search book",
     "login": "Login here",
     "signup": "Sign up here"
   },
