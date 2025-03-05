@@ -86,7 +86,7 @@ function SearchResult() {
       setStartIndex((prev) => prev += maxResults);
       setBookData(result, true);
     } catch (e) {
-
+      console.log(e);
     }
     setIsmoreLoading(false);
   }
