@@ -43,7 +43,8 @@
     "deRegisterBook": "Deregister",
     "register": "Sign up",
     "add": "Add",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "loadMore": "Load More"
   },
   "links": {
     "library": "Library",

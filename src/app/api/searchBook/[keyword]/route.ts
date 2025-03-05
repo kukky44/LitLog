@@ -19,6 +19,8 @@ export async function GET(
   const keyword = (await params).keyword;
   const url = new URL(request.url);
   const locale = url.searchParams.get("locale") || "ja";
+  const startIndex = url.searchParams.get("startIndex") || 0;
+  const maxResults = url.searchParams.get("maxResults") || 10;
 
   if(!keyword) return NextResponse.json({message: "No keyword"}, { status: 400 });
 
@@ -26,7 +28,7 @@ export async function GET(
     let bookData: BookType[] = [];
 
     await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=${locale}&maxResults=10&orderBy=relevance&key=${process.env.GOOGLE_API_KEY}`,
+      `https://www.googleapis.com/books/v1/volumes?q=${keyword}&langRestrict=${locale}&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=relevance&key=${process.env.GOOGLE_API_KEY}`,
       { next: {revalidate: 1800} }
     )
     .then(res => res.json())

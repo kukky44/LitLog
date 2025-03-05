@@ -43,7 +43,8 @@
     "deRegisterBook": "登録解除",
     "register": "登録",
     "add": "追加",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "loadMore": "さらに表示"
   },
   "links": {
     "library": "ライブラリ",
