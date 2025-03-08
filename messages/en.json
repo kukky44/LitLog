@@ -27,6 +27,7 @@
     "page": "Page:"
   },
   "readingStatus": {
+    "all": "All",
     "toRead": "To Read",
     "reading": "Reading",
     "finished": "Finished"
