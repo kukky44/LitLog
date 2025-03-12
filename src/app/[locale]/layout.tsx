@@ -7,6 +7,7 @@ import { Providers } from "./providers";
 import NextTopLoader from "nextjs-toploader";
 import { Suspense } from "react";
 import LoadingAnimation from "../components/ui/buttons/loadingAnimation";
+import type { Viewport } from 'next'
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -17,6 +18,12 @@ export const metadata: Metadata = {
   title: "Lit Log",
   description: "Store books iformation with memos",
 };
+
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+}
 
 export default async function RootLayout({
   children,
@@ -42,7 +49,7 @@ export default async function RootLayout({
                 <Header />
                 <NextTopLoader color="#4c1d95" showSpinner={false} shadow={false} />
               </Suspense>
-              <div className="max-w-4xl mt-6 mx-auto px-8 w-full">
+              <div className="max-w-4xl mt-6 mx-auto sm:px-8 px-6 w-full">
                 {children}
               </div>
               <FooterC />

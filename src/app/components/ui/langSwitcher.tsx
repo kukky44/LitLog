@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 const langLabels = ["あ", "A"];
 const locales = ["ja", "en"];
 
-const LangSwitcher: React.FC = () => {
+const LangSwitcher: React.FC<{ idPrefix: string }> = ({ idPrefix }) => {
   const [radioValue, setRadioValue] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
@@ -57,13 +57,13 @@ const LangSwitcher: React.FC = () => {
         <label
           className="py-0.5 first:pl-0.5 last:pr-0.5 box-border first:rounded-l-full first:border-r-0 last:rounded-r-full last:border-l-0 cursor-pointer border border-gray-200"
           key={index}
-          htmlFor={`langRadio-${label}`}
+          htmlFor={`${idPrefix}-langRadio-${index}`}
         >
           <input
             className="hidden"
             type="radio"
             name="langSwitcher"
-            id={`langRadio-${label}`}
+            id={`${idPrefix}-langRadio-${index}`}
             onChange={handleChange}
             checked={index === radioValue}
             value={index}
