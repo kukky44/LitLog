@@ -73,7 +73,7 @@ const NewBookModal: React.FC<ModalProps> = ({closeModal, mutate}) => {
 
   return (
     <div onClick={handleWrapperClick} className="fixed left-0 w-screen h-screen top-0 bg-gray-300 bg-opacity-30 transition">
-      <div onClick={stopPropagation} className="w-2/5 mx-auto top-24 relative bg-white rounded">
+      <div onClick={stopPropagation} className="md:w-2/5 sm:w-2/3 w-4/5 mx-auto top-24 relative bg-white rounded">
         <div className="flex justify-between items-center">
           <div className="font-bold text-2xl ml-6">{tNewBook("modalTitle")}</div>
           <button className="p-4 transition opacity-100 hover:opacity-70" onClick={closeModal}><IoIosClose size={32} /></button>

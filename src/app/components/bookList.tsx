@@ -12,9 +12,10 @@ type BooksProps = {
 
 export default function BookList({books, registeredGoogleBookIds, mutate, isLibrary}: BooksProps) {
   const {data: session} = useSession();
+  const cardsClass = "grid sm:grid-cols-2 grid-cols-1 gap-6"
 
   if(isLibrary) return (
-    <div className="grid grid-cols-2 gap-6">
+    <div className={cardsClass}>
       {books?.map(book=> {
         return (
           <BookCard key={book.id} book={book} isRegistered={true} mutate={mutate} isLibrary={isLibrary} />
@@ -27,7 +28,7 @@ export default function BookList({books, registeredGoogleBookIds, mutate, isLibr
       {session ?
         registeredGoogleBookIds === null || registeredGoogleBookIds === undefined? <div className="mt-8 text-center"><LoadingAnimation /></div>
         :
-        <div className="grid grid-cols-2 gap-6">
+        <div className={cardsClass}>
           {books?.map(book=> {
             const registered = registeredGoogleBookIds.length && book.googleBookId ? registeredGoogleBookIds.includes(book.googleBookId) : false;
 
@@ -38,7 +39,7 @@ export default function BookList({books, registeredGoogleBookIds, mutate, isLibr
           )}
         </div>
         :
-        <div className="grid grid-cols-2 gap-6">
+        <div className={cardsClass}>
           {books?.map(book=> {
             return (
               <BookCard key={book.googleBookId} book={book} isRegistered={false} mutate={mutate} />

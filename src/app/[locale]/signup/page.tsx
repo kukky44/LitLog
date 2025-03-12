@@ -89,12 +89,12 @@ export default function SignUp() {
   const labelClassName = "block mt-4 mb-1";
 
   return (
-    <div className="w-1/2 mx-auto">
+    <div className="sm:w-1/2 mx-auto w-full">
       <TitleText text={tForm("signupTitle")} className="mb-4" />
-      <form onSubmit={handleSubmit} className="min-w-80">
+      <form onSubmit={handleSubmit} className="sm:min-w-80">
         <div className="text-black mb-6" >
           <label className={labelClassName} htmlFor="email">{tForm("mailLabel")}</label>
-          <input autoComplete="off" value={inputEmail} onChange={(e => setInputEmail(e.target.value))} className={inputClassName} type="email" id="email" />
+          <input autoComplete="on" value={inputEmail} onChange={(e => setInputEmail(e.target.value))} className={inputClassName} type="email" id="email" />
           {errors.email && <ErrorMsg msg={errors.email} />}
 
           <label  className={labelClassName} htmlFor="password">{tForm("passwordLabel")}</label>

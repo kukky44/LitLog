@@ -62,11 +62,11 @@ export default function Page(){
       </div>}
       {book?.id &&
       <div>
-        <div className="grid grid-cols-5 gap-4 w-full">
-          <div className="col-span-2 top-6 sticky">
+        <div className="grid sm:grid-cols-5 grid-cols-1 gap-4 w-full">
+          <div className="sm:col-span-2 top-6 sm:sticky">
             <LibraryBookCard bookData={book} isRegistered={true} mutate={mutate} />
           </div>
-          <div className="col-span-3 rounded bg-white text-black">
+          <div className="sm:col-span-3 rounded bg-white text-black">
             {book.readingStatus !== undefined &&
               <div className="p-4">
                 <ReadingStatusRadio bookId={book.id} status={book.readingStatus} />
