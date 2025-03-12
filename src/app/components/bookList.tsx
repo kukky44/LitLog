@@ -39,7 +39,7 @@ export default function BookList({books, registeredGoogleBookIds, mutate, isLibr
           )}
         </div>
         :
-        <div className="grid grid-cols-2 gap-6">
+        <div className={cardsClass}>
           {books?.map(book=> {
             return (
               <BookCard key={book.googleBookId} book={book} isRegistered={false} mutate={mutate} />
