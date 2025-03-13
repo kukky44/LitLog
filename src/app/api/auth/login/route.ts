@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       }
     });
 
-    console.log("lgging in user and checking password");
+    console.log("logging in user and checking password");
     if(user){
       const match = await bcrypt.compare(password, user.password);
       if(match){

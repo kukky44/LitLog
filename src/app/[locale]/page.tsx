@@ -4,6 +4,7 @@ import { Link } from "@/src/i18n/routing";
 import PrimaryButton from "../components/ui/buttons/primaryButton";
 import SecondaryButton from "../components/ui/buttons/secondaryButton";
 import { useTranslations } from "next-intl";
+import TestLoginButton from "../components/ui/buttons/testLoginButton";
 
 export default function Home() {
   const tHome = useTranslations("home");
@@ -23,6 +24,7 @@ export default function Home() {
           <Link href="/login">
             <SecondaryButton label={tButtons("login")} />
           </Link>
+          <TestLoginButton />
         </div>
       </div>
       <div className="mt-12">
