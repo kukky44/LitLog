@@ -39,6 +39,7 @@
   "buttons": {
     "signup": "ユーザー登録",
     "login": "ログイン",
+    "testLogin": "テストユーザーログイン",
     "logout": "ログアウト",
     "registerBook": "本を登録",
     "deRegisterBook": "登録解除",

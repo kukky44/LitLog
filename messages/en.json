@@ -39,6 +39,7 @@
   "buttons": {
     "signup": "Sign up",
     "login": "Login",
+    "testLogin": "Login as Test User",
     "logout": "Logout",
     "registerBook": "Register book",
     "deRegisterBook": "Deregister",

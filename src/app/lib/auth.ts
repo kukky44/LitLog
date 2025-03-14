@@ -53,6 +53,40 @@ export const config = {
           return null;
         }
       }
+    }),
+    CredentialsProvider({
+      id: "test-user",
+      name: "Test user",
+      type: "credentials",
+      credentials: {
+        email: { label: "メールアドレス", type: "email", placeholder: "" },
+        password: { label: "パスワード", type: "password" }
+      },
+      async authorize() {
+        const userCredentials = {
+          email: process.env.TEST_USER_EMAIL,
+          password: process.env.TEST_USER_PASS
+        };
+        const res = await fetch(
+          `${process.env.API_URL}/api/auth/login`,
+          {
+            method: "POST",
+            body: JSON.stringify(userCredentials),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const user = await res.json();
+
+        if (res.ok && user) {
+          return user
+        } else {
+          console.log("test user login failed");
+          return null;
+        }
+      }
     })
   ],
   callbacks: {
