@@ -2,7 +2,7 @@
 
 読書の進捗管理ができるWebアプリケーションです。
 本の登録・読書の進捗管理・本にスレッド型でのメモ追加・本の検索ができます。
-[サイトURL](https://lit-log-five.vercel.app/)
+サイトURL:[https://lit-log-five.vercel.app](https://lit-log-five.vercel.app)
 
 ### 使用技術
 - Next.js
