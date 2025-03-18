@@ -1,8 +1,22 @@
-# LitLog
+### LitLog
 
-LitLog is an application designed to help you manage your book reading status and memos. With LitLog, you can easily keep track of the books you are reading, have read, or plan to read, and jot down important notes and thoughts along the way.
+読書の進捗管理ができるWebアプリケーションです。
+本の登録・読書の進捗管理・本にスレッド型でのメモ追加・本の検索ができます。
+[サイトURL](https://lit-log-five.vercel.app/)
 
-## Features
+### 使用技術
+- Next.js
+  - NextAuth.js (認証)
+  - next-intl (多言語対応)
+- Tailwind CSS
+- Prisma
+- PostgreSQL
+- Vercel
 
-- **Track Reading Status**: Mark books as "To Read", "Reading", or "Read".
-- **Add Memos**: Write and save notes for each book.
+### 機能
+- ユーザー登録・ログイン
+- 本の登録・削除
+- 読書の進捗管理（未読・読書中・読了）
+- 本にスレッド型でのメモ追加
+- Google Books APIを使用した本の検索
+- 言語選択（日本語・英語）
